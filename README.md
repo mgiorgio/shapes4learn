@@ -7,7 +7,7 @@ It may be used as an introduction to Compilers since it can covers most of the p
 
 This framework is used for the Languages Processing course in Universidad Maimónides in Buenos Aires, Argentina.
 
-## Available commands
+### Available commands
 
 ##### Create a shape in the Shape Ambient. The new shape will have the provided id:
 create shape|rectangle|circle [id];
@@ -24,7 +24,7 @@ setheight [expression] in rectangle [id];
 ##### Set the given radius on the circle defined by the provided id:
 setradius [expression] in circle [id];
 
-## Defined Grammar (Incomplete)
+### Defined Grammar (Incomplete)
 
 ##### A single letter in ascii alphabet.
 [letter] := a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|O|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z
@@ -39,7 +39,7 @@ setradius [expression] in circle [id];
 ##### A number composed by a concatenation of one or more single digits.
 [number] := [digit][number]|[digit]
 
-## Grammars to be defined by students
+### Grammars to be defined by students
 
 ##### A mathematical expression that supports numbers, addition, subtraction, multiplication, division and parenthesis. For example: 9+(4*(5-7)+8/2)
 [expression] :=
