@@ -7,7 +7,7 @@ package edu.maimonides.multimedia.shapes4learn.model.exceptions;
  * @author Matias Giorgio
  * 
  */
-public class InexistentShapeException extends ShapeManipulationException {
+public class InexistentShapeException extends RuntimeException {
 
 	public InexistentShapeException() {
 	}

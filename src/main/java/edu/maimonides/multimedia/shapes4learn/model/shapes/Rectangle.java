@@ -1,4 +1,4 @@
-package edu.maimonides.multimedia.shapes4learn.model;
+package edu.maimonides.multimedia.shapes4learn.model.shapes;
 
 public class Rectangle extends Shape {
 
@@ -6,7 +6,13 @@ public class Rectangle extends Shape {
 
 	private int height;
 
+	public static final int DEFAULT_BASE = 10;
+
+	public static final int DEFAULT_HEIGHT = 10;
+
 	public Rectangle() {
+		this.setBase(DEFAULT_BASE);
+		this.setHeight(DEFAULT_HEIGHT);
 	}
 
 	public int getBase() {

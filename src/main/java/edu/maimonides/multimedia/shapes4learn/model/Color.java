@@ -1,5 +1,7 @@
 package edu.maimonides.multimedia.shapes4learn.model;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 public class Color {
 
 	/**
@@ -42,5 +44,30 @@ public class Color {
 
 	public int getBlue() {
 		return this.b;
+	}
+
+	@Override
+	public int hashCode() {
+		HashCodeBuilder builder = new HashCodeBuilder();
+
+		builder.append(r);
+		builder.append(g);
+		builder.append(b);
+
+		return builder.toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Color)) {
+			return false;
+		}
+		Color anotherColor = (Color) obj;
+		return this.r == anotherColor.r && this.g == anotherColor.g && this.b == anotherColor.b;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%x%x%x", r, g, b);
 	}
 }

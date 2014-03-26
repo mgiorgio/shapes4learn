@@ -1,20 +1,21 @@
 package edu.maimonides.multimedia.shapes4learn.model;
 
 import edu.maimonides.multimedia.shapes4learn.model.exceptions.InexistentShapeException;
+import edu.maimonides.multimedia.shapes4learn.model.shapes.Shape;
 
 /**
  * The environment where the {@link Shape}s live. Once a {@link Shape} is
- * created, it can be added to the {@link ModelAmbient} and will be there until
- * it is removed. Once in the {@link ModelAmbient}, it can be retrieved for
+ * created, it can be added to the {@link ShapeAmbient} and will be there until
+ * it is removed. Once in the {@link ShapeAmbient}, it can be retrieved for
  * manipulation.
  * 
  * @author Matias Giorgio
  * 
  */
-public interface ModelAmbient {
+public interface ShapeAmbient {
 
 	/**
-	 * Adds a {@link Shape} to the {@link ModelAmbient}. If the ambient already
+	 * Adds a {@link Shape} to the {@link ShapeAmbient}. If the ambient already
 	 * contains a {@link Shape} with the same id of the given shape, the new one
 	 * will not be added.
 	 * 
@@ -24,7 +25,7 @@ public interface ModelAmbient {
 	public void add(Shape shape);
 
 	/**
-	 * Retrieves a {@link Shape} from the {@link ModelAmbient}.
+	 * Retrieves a {@link Shape} from the {@link ShapeAmbient}.
 	 * 
 	 * @param id
 	 *            The unique id of the {@link Shape} to retrieve.
