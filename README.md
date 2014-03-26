@@ -9,19 +9,19 @@ This framework is used for the Languages Processing course in Universidad Maimó
 
 ## Available commands
 
-##### Creates a shape in the Shape Ambient. The new shape will have the provided id.
+##### Create a shape in the Shape Ambient. The new shape will have the provided id:
 create shape|rectangle|circle [id];
 
-##### Sets the color to an already existing shape in the Shape Ambient. The shape must already exist.
+##### Set the color to an already existing shape in the Shape Ambient. The shape must already exist:
 setcolor [color_def] in shape [id];
 
-##### Sets the given base on the rectangle defined by the provided id.
+##### Set the given base on the rectangle defined by the provided id:
 setbase [expression] in rectangle [id];
 
-##### Sets the given height on the rectangle defined by the provided id.
+##### Set the given height on the rectangle defined by the provided id:
 setheight [expression] in rectangle [id];
 
-##### Sets the given radius on the circle defined by the provided id.
+##### Set the given radius on the circle defined by the provided id:
 setradius [expression] in circle [id];
 
 ## Defined Grammar (Incomplete)
