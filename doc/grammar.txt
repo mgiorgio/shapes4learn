@@ -32,8 +32,8 @@ Defined Grammar (Incomplete)
 # A number composed by a concatenation of one or more single digits.
 <number> := <digit><number>|<digit>
 
-Grammars to be defined
-======================
+Grammars to be defined by students
+==================================
 
 # A mathematical expression that supports numbers, addition, subtraction, multiplication, division and parenthesis. For example: 9+(4*(5-7)+8/2)
 <expression>
