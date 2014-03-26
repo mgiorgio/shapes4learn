@@ -7,39 +7,39 @@ It may be used as an introduction to Compilers since it can covers most of the p
 
 This framework is used for the Languages Processing course in Universidad Maimónides in Buenos Aires, Argentina.
 
-# Available commands
+## Available commands
 
-## Creates a shape in the Shape Ambient. The new shape will have the provided id.
-create shape|rectangle|circle <id>;
+##### Creates a shape in the Shape Ambient. The new shape will have the provided id.
+create shape|rectangle|circle [id];
 
-## Sets the color to an already existing shape in the Shape Ambient. The shape must already exist.
-setcolor <color_def> in shape <id>;
+##### Sets the color to an already existing shape in the Shape Ambient. The shape must already exist.
+setcolor [color_def] in shape [id];
 
-## Sets the given base on the rectangle defined by the provided id.
-setbase <expression> in rectangle <id>;
+##### Sets the given base on the rectangle defined by the provided id.
+setbase [expression] in rectangle [id];
 
-## Sets the given height on the rectangle defined by the provided id.
-setheight <expression> in rectangle <id>;
+##### Sets the given height on the rectangle defined by the provided id.
+setheight [expression] in rectangle [id];
 
-## Sets the given radius on the circle defined by the provided id.
-setradius <expression> in circle <id>;
+##### Sets the given radius on the circle defined by the provided id.
+setradius [expression] in circle [id];
 
-#Defined Grammar (Incomplete)
+## Defined Grammar (Incomplete)
 
-##A single letter in western alphabet.
-<letter> := a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|O|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z
-##An identifier for the source code.
-<id> := <letter><id>|<letter>
-##A single digit.
-<digit> := 1|2|3|4|5|6|7|8|9|0
-## A single hexadecimal digit.
-<hexdigit> := <digit>|a|b|c|d|e|f|A|B|C|D|E|F
-## A color definition in RGB from #000000 to #ffffff
-<color_def> := #<hexdigit><hexdigit><hexdigit><hexdigit><hexdigit><hexdigit>
-## A number composed by a concatenation of one or more single digits.
-<number> := <digit><number>|<digit>
+##### A single letter in ascii alphabet.
+[letter] := a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|O|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z
+##### An identifier for the source code.
+[id] := [letter][id]|[letter]
+##### A single digit.
+[digit] := 1|2|3|4|5|6|7|8|9|0
+##### A single hexadecimal digit.
+[hexdigit] := [digit]|a|b|c|d|e|f|A|B|C|D|E|F
+##### A color definition in RGB from #000000 to #ffffff
+[color_def] := #[hexdigit][hexdigit][hexdigit][hexdigit][hexdigit][hexdigit]
+##### A number composed by a concatenation of one or more single digits.
+[number] := [digit][number]|[digit]
 
-#Grammars to be defined by students
+## Grammars to be defined by students
 
-## A mathematical expression that supports numbers, addition, subtraction, multiplication, division and parenthesis. For example: 9+(4*(5-7)+8/2)
-<expression>
+##### A mathematical expression that supports numbers, addition, subtraction, multiplication, division and parenthesis. For example: 9+(4*(5-7)+8/2)
+[expression] :=
