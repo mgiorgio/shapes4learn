@@ -41,18 +41,15 @@ public abstract class InterpreterTests {
 	@Before
 	public void setUp() {
 		ambient = new BasicShapeAmbient();
-		interpreter = createInterpreter(ambient);
+		interpreter = createInterpreter();
 	}
 
 	/**
 	 * This method has to be implemented by subclasses.
 	 * 
-	 * @param ambient
-	 *            The {@link ShapeAmbient} to be used with the
-	 *            {@link Interpreter}.
 	 * @return The {@link Interpreter} instance that will be tested.
 	 */
-	protected abstract Interpreter createInterpreter(ShapeAmbient ambient);
+	protected abstract Interpreter createInterpreter();
 
 	/**
 	 * Tests the create shape action. After the interpretation, this method will
@@ -75,7 +72,7 @@ public abstract class InterpreterTests {
 	private void createShape(String specificShape, final String shapeID) throws CodeException {
 		final String code = "create " + specificShape + " " + shapeID + ";";
 
-		interpreter.interpret(code);
+		interpreter.interpret(code, ambient);
 	}
 
 	@Test
@@ -86,7 +83,7 @@ public abstract class InterpreterTests {
 
 		createShape(SHAPE_ID);
 
-		interpreter.interpret(code);
+		interpreter.interpret(code, ambient);
 
 		Shape shape = ambient.get(SHAPE_ID);
 
@@ -102,7 +99,7 @@ public abstract class InterpreterTests {
 		final String code = "set color " + colorDef + " in shape " + SHAPE_ID + ";";
 
 		try {
-			interpreter.interpret(code);
+			interpreter.interpret(code, ambient);
 			Assert.fail("The interpreter should have failed because the ID does not exist.");
 		} catch (CodeException e) {
 			// Expected.
@@ -154,7 +151,7 @@ public abstract class InterpreterTests {
 
 		createShape("rectangle", SHAPE_ID);
 
-		interpreter.interpret(code);
+		interpreter.interpret(code, ambient);
 
 		Rectangle rectangle = (Rectangle) ambient.get(SHAPE_ID);
 
@@ -174,7 +171,7 @@ public abstract class InterpreterTests {
 		}
 
 		try {
-			interpreter.interpret(code);
+			interpreter.interpret(code, ambient);
 			Assert.fail("Base cannot be set in a circle");
 		} catch (CodeException e) {
 			// Expected.

@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
 
+import edu.maimonides.multimedia.shapes4learn.model.ShapeAmbient;
 import edu.maimonides.multimedia.shapes4learn.model.shapes.Rectangle;
 import edu.maimonides.multimedia.shapes4learn.model.shapes.Shape;
 import edu.maimonides.multimedia.shapes4learn.utils.ColorUtils;
@@ -19,7 +20,7 @@ import edu.maimonides.multimedia.shapes4learn.utils.ShapeUtils;
  * @author Matias Giorgio.
  * 
  */
-public class RegexInterpreter extends Interpreter {
+public class RegexInterpreter implements Interpreter {
 
 	private static final String NUMBER_PATTERN = "\\d+";
 	private static final String SHAPE_TYPE_PATTERN = "[a-zA-Z]+";
@@ -40,29 +41,29 @@ public class RegexInterpreter extends Interpreter {
 	}
 
 	@Override
-	public void interpret(String code) throws CodeException {
+	public void interpret(String code, ShapeAmbient ambient) throws CodeException {
 		code = code.trim();
 
 		if (code.startsWith(CREATE_KEYWORD)) {
-			processCreateShape(code);
+			processCreateShape(code, ambient);
 		} else if (code.startsWith(SET_COLOR_KEYWORD)) {
-			processSetColor(code);
+			processSetColor(code, ambient);
 		} else if (code.startsWith(SET_BASE_KEYWORD)) {
-			processSetBase(code);
+			processSetBase(code, ambient);
 		} else {
 			throw new CodeException("Unexpected code.");
 		}
 	}
 
-	private void processSetBase(String code) throws CodeException {
+	private void processSetBase(String code, ShapeAmbient ambient) throws CodeException {
 		Matcher matcher = setbasePatternInRectangle.matcher(code);
 
 		if (matcher.find()) {
 			int base = Integer.parseInt(matcher.group(1));
 			String id = matcher.group(2);
 
-			if (this.getShapeAmbient().contains(id)) {
-				Rectangle rectangle = (Rectangle) this.getShapeAmbient().get(id);
+			if (ambient.contains(id)) {
+				Rectangle rectangle = (Rectangle) ambient.get(id);
 				rectangle.setBase(base);
 			} else {
 				throw new CodeException("Id " + id + " does not exist.");
@@ -72,15 +73,15 @@ public class RegexInterpreter extends Interpreter {
 		}
 	}
 
-	private void processSetColor(String code) throws CodeException {
+	private void processSetColor(String code, ShapeAmbient ambient) throws CodeException {
 		Matcher matcher = setColorPattern.matcher(code);
 
 		if (matcher.find()) {
 			String colorDef = matcher.group(1);
 			String id = matcher.group(2);
 
-			if (this.getShapeAmbient().contains(id)) {
-				Shape shape = this.getShapeAmbient().get(id);
+			if (ambient.contains(id)) {
+				Shape shape = ambient.get(id);
 				shape.setColor(ColorUtils.color(colorDef));
 			} else {
 				throw new CodeException("Unrecognized identifier");
@@ -90,7 +91,7 @@ public class RegexInterpreter extends Interpreter {
 		}
 	}
 
-	private void processCreateShape(String code) throws CodeException {
+	private void processCreateShape(String code, ShapeAmbient ambient) throws CodeException {
 		Matcher matcher = createPattern.matcher(code);
 
 		if (matcher.find()) {
@@ -98,10 +99,10 @@ public class RegexInterpreter extends Interpreter {
 			String id = matcher.group(2);
 
 			Shape shape = createShape(type, id);
-			if (this.getShapeAmbient().contains(id)) {
+			if (ambient.contains(id)) {
 				throw new CodeException("Id " + id + " already exists.");
 			} else {
-				this.getShapeAmbient().add(shape);
+				ambient.add(shape);
 			}
 		} else {
 			throw new CodeException("Unrecognized identifier");
@@ -122,8 +123,8 @@ public class RegexInterpreter extends Interpreter {
 	}
 
 	@Override
-	public void interpret(InputStream stream) throws CodeException, IOException {
-		this.interpret(IOUtils.toString(stream));
+	public void interpret(InputStream stream, ShapeAmbient ambient) throws CodeException, IOException {
+		this.interpret(IOUtils.toString(stream), ambient);
 	}
 
 }

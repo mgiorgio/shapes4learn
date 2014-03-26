@@ -2,6 +2,12 @@ package edu.maimonides.multimedia.shapes4learn.model.shapes;
 
 import edu.maimonides.multimedia.shapes4learn.model.Color;
 
+/**
+ * The basic object that can be created, deleted and manipulated in Shape4Learn.
+ * 
+ * @author Matias Giorgio.
+ * 
+ */
 public class Shape {
 
 	private String id;
@@ -12,6 +18,9 @@ public class Shape {
 		color = defaultColor();
 	}
 
+	/**
+	 * @return The default {@link Color} assigned to new objects.
+	 */
 	public static Color defaultColor() {
 		Color color = new Color();
 		color.setBlue(0);

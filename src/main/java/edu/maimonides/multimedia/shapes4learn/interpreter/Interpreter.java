@@ -13,28 +13,17 @@ import edu.maimonides.multimedia.shapes4learn.model.ShapeAmbient;
  * @author Matias Giorgio
  * 
  */
-public abstract class Interpreter {
-
-	private ShapeAmbient ambient;
-
-	public Interpreter() {
-	}
-
-	public void setShapeAmbient(ShapeAmbient ambient) {
-		this.ambient = ambient;
-	}
-
-	public ShapeAmbient getShapeAmbient() {
-		return this.ambient;
-	}
+public interface Interpreter {
 
 	/**
 	 * Interprets an entire source code.
 	 * 
 	 * @param code
 	 *            A {@link String} representing the entire source code.
+	 * @param ambient
+	 *            The {@link ShapeAmbient} where the code will be interpreted.
 	 */
-	public abstract void interpret(String code) throws CodeException;
+	public void interpret(String code, ShapeAmbient ambient) throws CodeException;
 
 	/**
 	 * Interprets a source as a stream. Characters are read on demand and
@@ -43,8 +32,10 @@ public abstract class Interpreter {
 	 * 
 	 * @param stream
 	 *            The {@link InputStream} that provides the source code.
+	 * @param ambient
+	 *            The {@link ShapeAmbient} where the code will be interpreted.
 	 * @throws IOException
 	 *             If there is an issue accessing the stream.
 	 */
-	public abstract void interpret(InputStream stream) throws CodeException, IOException;
+	public void interpret(InputStream stream, ShapeAmbient ambient) throws CodeException, IOException;
 }
