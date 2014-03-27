@@ -38,6 +38,9 @@ Shapes4Learn defines a formal language for shapes creation and manipulation. The
 
 ## Shapes4Learn Language Documentation
 
+### About the tokens
+In this language, tokens are mostly separated by whitespaces such as space, tab, CR or LF. The only exceptions are the numerical expressions and semi-colon. In the first case, whitespaces are not mandatory meaning that _4*(3+9)_ is valid but also _4 * (3+9 )_. For semi-colons, they can be placed together with the last token of a sentence or separated.
+
 ### Available commands
 
 **Create a shape in the Shape Ambient. The new shape will have the provided id:**
