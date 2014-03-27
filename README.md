@@ -26,7 +26,7 @@ Shapes4Learn defines a formal language for shapes creation and manipulation. The
 ##### It is expected in the near future that Shapes4Learn will incorporate the next features:
 * More commands in the language.
 * More shapes: Triangle.
-* More shapes attributes: position, movements and rotation.
+* More shapes attributes: movements and rotation.
 * Better test coverage.
  
 ##### Mid term expected features:
@@ -62,6 +62,9 @@ setheight [expression] in rectangle [id];
 **Set the given radius on the circle defined by the provided id:**
 
 setradius [expression] in circle [id];
+
+**Set the 2D-position (x,y) for the shape given by the id:**
+setposition [expression],[expression] in shape [id];
 
 ### Defined Grammar (Incomplete)
 
