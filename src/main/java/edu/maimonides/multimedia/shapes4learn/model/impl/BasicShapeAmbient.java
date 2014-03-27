@@ -1,5 +1,6 @@
 package edu.maimonides.multimedia.shapes4learn.model.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,4 +53,8 @@ public class BasicShapeAmbient implements ShapeAmbient {
 		return this.shapes.containsKey(id);
 	}
 
+	@Override
+	public Iterable<Shape> shapes() {
+		return new ArrayList<>(this.shapes.values());
+	}
 }
