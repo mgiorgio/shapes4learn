@@ -21,6 +21,10 @@ Shapes4Learn defines a formal language for shapes creation and manipulation. The
 * **Interpreter:** This is the most important component of the framework because is the one that students must implement. It can be as simple or complex as the developer wants. Shape4Learn packages a trivial **Interpreter** implemented using regular expressions that is used in the tests.
 * **InterpreterTests:** A Test Suite that must be passed by any implemented **Interpreter**.
 
+### Class diagram
+
+![alt tag](https://raw.githubusercontent.com/mgiorgio/shapes4learn/master/doc/classdiagram.gif)
+
 ### Future steps
 
 ##### It is expected in the near future that Shapes4Learn will incorporate the next features:
