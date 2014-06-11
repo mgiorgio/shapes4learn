@@ -98,6 +98,6 @@ setposition [expression],[expression] in shape [id];
 
 ### Grammars to be defined by students
 
-**A mathematical expression that supports numbers, addition, subtraction, multiplication, division and parenthesis. For example: 9+(4*(5-7)+8/2):**
+**A mathematical expression that supports numbers, addition, subtraction, multiplication, division and parenthesis. For example:** 9+(4*(5-7)+8/2)
 
 [expression] :=
