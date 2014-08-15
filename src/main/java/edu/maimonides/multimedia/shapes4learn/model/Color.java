@@ -70,4 +70,8 @@ public class Color {
 	public String toString() {
 		return String.format("%x%x%x", r, g, b);
 	}
+
+	public java.awt.Color toAWTColor() {
+		return new java.awt.Color(r, g, b);
+	}
 }

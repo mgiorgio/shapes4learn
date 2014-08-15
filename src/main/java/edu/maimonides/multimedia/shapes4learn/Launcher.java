@@ -1,9 +1,10 @@
 package edu.maimonides.multimedia.shapes4learn;
-import java.awt.BorderLayout;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JOptionPane;
+
+import edu.maimonides.multimedia.shapes4learn.gui.InterpreterFrame;
+import edu.maimonides.multimedia.shapes4learn.interpreter.Interpreter;
+import edu.maimonides.multimedia.shapes4learn.model.impl.BasicShapeAmbient;
 
 /**
  * 
@@ -19,27 +20,28 @@ public class Launcher {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		JFrame mainFrame = new JFrame("Shape4Learn");
+		if (args.length == 0) {
+			JOptionPane.showMessageDialog(null, "An Interpreter implementation must be passed", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		InterpreterFrame frame;
+		try {
+			frame = new InterpreterFrame(createInterpreter(args[0]), new BasicShapeAmbient());
+			frame.init();
+			frame.setVisible(true);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		BorderLayout layout = new BorderLayout();
-		JPanel mainPanel = createMainPanel(layout);
-
-		mainFrame.getContentPane().add(mainPanel);
-		mainFrame.pack();
-		mainFrame.setVisible(true);
 	}
 
-	private static JPanel createMainPanel(BorderLayout layout) {
-		JPanel mainPanel = new JPanel(layout);
-		
-		JTextArea instructionsArea = new JTextArea("ABC");
-		
-		mainPanel.add(instructionsArea, BorderLayout.WEST);
-		
-		JPanel drawingPanel = new JPanel();
-		
-		mainPanel.add(drawingPanel, BorderLayout.EAST);
-		
-		return mainPanel;
+	private static Interpreter createInterpreter(String classname) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+		@SuppressWarnings("unchecked")
+		Class<Interpreter> clazz = (Class<Interpreter>) Class.forName(classname);
+
+		return clazz.newInstance();
 	}
 }

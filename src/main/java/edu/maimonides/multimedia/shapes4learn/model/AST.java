@@ -61,7 +61,7 @@ public class AST {
 	 * Retrieves a child from the AST.
 	 * 
 	 * @param index
-	 *            The index where the child will be retrieved.
+	 *            The index where the child will be retrieved from.
 	 * @return <code>true</code> if there was a child in the given index.
 	 */
 	public AST getChild(int index) {
