@@ -1,5 +1,8 @@
 package edu.maimonides.multimedia.shapes4learn.model.shapes;
 
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+
 public class Circle extends Shape {
 
 	private int radius;
@@ -16,5 +19,10 @@ public class Circle extends Shape {
 
 	public void setRadius(int ratio) {
 		this.radius = ratio;
+	}
+
+	@Override
+	public void drawIn(Graphics2D g2d) {
+		g2d.fill(new Ellipse2D.Double(0, 0, this.radius * 2, this.radius * 2));
 	}
 }

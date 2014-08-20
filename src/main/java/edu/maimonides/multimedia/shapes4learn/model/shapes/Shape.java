@@ -1,5 +1,7 @@
 package edu.maimonides.multimedia.shapes4learn.model.shapes;
 
+import java.awt.Graphics2D;
+
 import edu.maimonides.multimedia.shapes4learn.model.Color;
 
 /**
@@ -47,5 +49,10 @@ public class Shape {
 
 	public boolean isClass(Class<? extends Shape> clazz) {
 		return clazz.isAssignableFrom(this.getClass());
+	}
+
+	public void drawIn(Graphics2D g2d) {
+		// Do nothing. Shape will become abstract then this method will be
+		// abstract too.
 	}
 }

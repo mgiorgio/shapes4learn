@@ -1,5 +1,7 @@
 package edu.maimonides.multimedia.shapes4learn.model.shapes;
 
+import java.awt.Graphics2D;
+
 public class Rectangle extends Shape {
 
 	private int base;
@@ -29,5 +31,10 @@ public class Rectangle extends Shape {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	public void drawIn(Graphics2D g2d) {
+		g2d.setColor(this.getColor().toAWTColor());
+		g2d.fillRect(0, 0, this.getBase(), this.getHeight());
 	}
 }

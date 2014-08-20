@@ -7,13 +7,23 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.layout.FormLayout;
 
+import edu.maimonides.multimedia.shapes4learn.model.ShapeAmbient;
+import edu.maimonides.multimedia.shapes4learn.model.shapes.Circle;
+import edu.maimonides.multimedia.shapes4learn.model.shapes.Rectangle;
+import edu.maimonides.multimedia.shapes4learn.model.shapes.Shape;
+
 public class ShapesDashboard extends JPanel {
+
+	private static final long serialVersionUID = 2189138052628261761L;
 
 	private JLabel circles;
 
 	private JLabel rectangles;
 
-	public ShapesDashboard() {
+	private ShapeAmbient ambient;
+
+	public ShapesDashboard(ShapeAmbient ambient) {
+		this.ambient = ambient;
 		initGUI();
 	}
 
@@ -30,6 +40,28 @@ public class ShapesDashboard extends JPanel {
 		builder.append("Circles:", circles);
 
 		this.add(builder.build());
+	}
+
+	@Override
+	public void repaint() {
+		super.repaint();
+
+		if (this.ambient != null) {
+			this.clearNumbers();
+
+			for (Shape shape : ambient.shapes()) {
+				if (shape.isClass(Rectangle.class)) {
+					this.increaseRectangle();
+				} else if (shape.isClass(Circle.class)) {
+					this.increaseCircle();
+				}
+			}
+		}
+	}
+
+	private void clearNumbers() {
+		this.setRectangles(0);
+		this.setCircles(0);
 	}
 
 	public void increaseCircle() {

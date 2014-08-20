@@ -48,7 +48,7 @@ public class InterpreterFrame extends JFrame {
 		shapesPanel.setAmbient(ambient);
 		console = new JTextArea();
 		menuBar = new JMenuBar();
-		dashboard = new ShapesDashboard();
+		dashboard = new ShapesDashboard(this.ambient);
 	}
 
 	public void init() {
@@ -57,7 +57,6 @@ public class InterpreterFrame extends JFrame {
 		JScrollPane codeScrollPane = new JScrollPane(code);
 		codeScrollPane.setBorder(BorderFactory.createTitledBorder("Code"));
 		codeShapesSplitPane.add(codeScrollPane);
-		shapesPanel.setBorder(BorderFactory.createTitledBorder("Shapes"));
 		codeShapesSplitPane.add(shapesPanel);
 
 		JSplitPane consoleSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -111,6 +110,7 @@ public class InterpreterFrame extends JFrame {
 				error(e1.getMessage());
 			}
 			shapesPanel.repaint();
+			dashboard.repaint();
 		}
 	}
 
