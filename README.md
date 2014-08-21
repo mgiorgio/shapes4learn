@@ -49,7 +49,7 @@ In this language, tokens are mostly separated by whitespaces such as space, tab,
 
 **Create a shape in the Shape Ambient. The new shape will have the provided id:**
 
-create shape|rectangle|circle [id];
+create rectangle|circle [id];
 
 **Set the color to an already existing shape in the Shape Ambient. The shape must already exist:**
 
@@ -95,8 +95,6 @@ setposition [expression],[expression] in shape [id];
 **A number composed by a concatenation of one or more single digits:**
 
 [number] := [digit][number]|[digit]
-
-### Grammars to be defined by students
 
 **A mathematical expression that supports numbers, addition, subtraction, multiplication, division and parenthesis. For example:** 9+(4*(5-7)+8/2)
 
