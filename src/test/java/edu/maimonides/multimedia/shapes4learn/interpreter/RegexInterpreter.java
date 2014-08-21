@@ -42,6 +42,14 @@ public class RegexInterpreter implements Interpreter {
 
 	@Override
 	public void interpret(String code, ShapeAmbient ambient) throws CodeException {
+		String[] lines = StringUtils.split(code, "\n");
+
+		for (String line : lines) {
+			interpretLine(line, ambient);
+		}
+	}
+
+	private void interpretLine(String code, ShapeAmbient ambient) throws CodeException {
 		code = code.trim();
 
 		if (code.startsWith(CREATE_KEYWORD)) {
