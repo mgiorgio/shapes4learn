@@ -32,9 +32,6 @@ Shapes4Learn defines a formal language for shapes creation and manipulation. The
 * More shapes: Triangle.
 * More shapes attributes: movements and rotation.
 * Better test coverage.
- 
-##### Mid term expected features:
-* Shape4Learn GUI (A Swing based application that renders the shapes created by the core of Shape4Learn).
 
 ##### Longer term expected features:
 * Control structures (loops).
