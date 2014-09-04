@@ -24,6 +24,6 @@ public class Circle extends Shape {
 	@Override
 	public void drawIn(Graphics2D g2d) {
 		g2d.setColor(this.getColor().toAWTColor());
-		g2d.fill(new Ellipse2D.Double(0, 0, this.radius * 2, this.radius * 2));
+		g2d.fill(new Ellipse2D.Double(this.getX(), this.getY(), this.radius * 2, this.radius * 2));
 	}
 }

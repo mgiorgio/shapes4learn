@@ -35,6 +35,6 @@ public class Rectangle extends Shape {
 
 	public void drawIn(Graphics2D g2d) {
 		g2d.setColor(this.getColor().toAWTColor());
-		g2d.fillRect(0, 0, this.getBase(), this.getHeight());
+		g2d.fillRect(this.getX(), this.getY(), this.getBase(), this.getHeight());
 	}
 }
