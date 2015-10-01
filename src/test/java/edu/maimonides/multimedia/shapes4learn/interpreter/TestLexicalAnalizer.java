@@ -75,6 +75,8 @@ public class TestLexicalAnalizer {
 				}
 			}
 			
+			assertTrue("Lexema Correcto ", soniguales);
+			
 			for (Iterator<Token> iterator = tokens.iterator(); iterator.hasNext();) {
 				Token token = (Token) iterator.next();
 				System.out.println("Lexema: " + token.lexema + "			Clase: " + token.clase);
@@ -127,6 +129,8 @@ public class TestLexicalAnalizer {
 				}
 			}
 			
+			assertTrue("Lexema Correcto ", soniguales);
+
 			
 			for (Iterator<Token> iterator = tokens.iterator(); iterator.hasNext();) {
 				Token token = (Token) iterator.next();
