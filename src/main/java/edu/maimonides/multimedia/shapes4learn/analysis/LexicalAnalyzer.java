@@ -113,26 +113,20 @@ public class LexicalAnalyzer {
 
 				    int f=0;
 				    char ant='a';
-				    
+
 				    for (;(f<lexemas[i].length()) && (reservada1==false);f++)
 			        { 
-				    	
-			        	if (Character.isDigit(lexemas[i].charAt(f)))
+
+			        	if (Character.isDigit(lexemas[i].charAt(f)) || lexemas[i].charAt(f) == '-' ||
+	        				lexemas[i].charAt(f) == '*' || lexemas[i].charAt(f) == '/' 
+	        				|| lexemas[i].charAt(f) == '(' || lexemas[i].charAt(f) == ')'
+	        				|| (lexemas[i].charAt(f)) == '+')
 			        			{
-			    					ant=lexemas[i].charAt(f);
+			        				ExpArit=true;
 			        			} else
 			        			
 			        			{
-			        				if ((lexemas[i].charAt(f) == '+' || lexemas[i].charAt(f) == '-' ||
-			        					 lexemas[i].charAt(f) == '*' || lexemas[i].charAt(f) == '/')
-			        					&& Character.isDigit(ant))
-			        				{
-			        					ant=lexemas[i].charAt(f);
-			        					ExpArit=true;
-			        				}else
-			        				{
-			        					ExpArit=false;
-			        				}
+			        				ExpArit=false;
 			        			}
 			        }
 				    

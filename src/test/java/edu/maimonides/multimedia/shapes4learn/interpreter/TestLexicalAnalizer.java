@@ -144,5 +144,62 @@ public class TestLexicalAnalizer {
 		}
 
 	}
+	
+	@Test
+	public void test3() {
+		
+		String code1 = "setradius (5+5)*3 in circle micirculo ;";
+		
+		List<Token> tokenValida = new LinkedList<>();
+		
+		LexicalAnalyzer lex = new LexicalAnalyzer();
+
+		try {
+			
+			List<Token> tokens = lex.analyze(code1);
+			
+			System.out.println("\n");
+			System.out.println("	   TestLexicalAnalizer: \n");
+			
+			//Inicializar prueba 3
+			Token tok = new Token();
+			tok.setLexema("setradius");tok.setClase("setear radio");tokenValida.add(tok);
+			tok = new Token();
+			tok.setLexema("(5+5)*3");tok.setClase("Expresion Aritmetica");tokenValida.add(tok);
+			tok = new Token();
+			tok.setLexema("in");tok.setClase("`in`");tokenValida.add(tok);
+			tok = new Token();
+			tok.setLexema("circle");tok.setClase("ShapeCirculo");tokenValida.add(tok);
+			tok = new Token();
+			tok.setLexema("micirculo");tok.setClase("ID");tokenValida.add(tok);
+			tok = new Token();
+			tok.setLexema(";");tok.setClase("fin de sentancia");tokenValida.add(tok);
+			
+			boolean soniguales = false;
+			
+			for (int i = 0; i < tokens.size() || i < tokenValida.size(); i++) {
+
+				if (tokens.get(i).getLexema().equals(tokenValida.get(i).getLexema())
+						&& tokens.get(i).getClase().equals(tokenValida.get(i).getClase())) {
+					
+					soniguales=true;
+				}
+			}
+			
+			assertTrue("Lexema Correcto ", soniguales);
+
+			
+			for (Iterator<Token> iterator = tokens.iterator(); iterator.hasNext();) {
+				Token token = (Token) iterator.next();
+				System.out.println("Lexema: " + token.lexema + "			Clase: " + token.clase);
+			}
+			
+			}catch(LexicalException e) {
+			// TODO Auto-generated catch block
+			fail("Lanzada excepcion no esperada Tokeb caso 1");
+			e.printStackTrace();
+		}
+
+	}
 
 }
