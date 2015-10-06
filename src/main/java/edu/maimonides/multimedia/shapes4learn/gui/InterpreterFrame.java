@@ -15,6 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 
+import edu.maimonides.multimedia.shapes4learn.analysis.LexicalAnalyzer;
+import edu.maimonides.multimedia.shapes4learn.controller.InterpreterController;
 import edu.maimonides.multimedia.shapes4learn.interpreter.CodeException;
 import edu.maimonides.multimedia.shapes4learn.interpreter.Interpreter;
 import edu.maimonides.multimedia.shapes4learn.model.ShapeAmbient;
@@ -40,9 +42,17 @@ public class InterpreterFrame extends JFrame {
 
 	private JMenuBar menuBar;
 
-	public InterpreterFrame(Interpreter interpreter, ShapeAmbient ambient) {
+	private LexicalAnalyzer la;
+
+	private InterpreterController ic;
+	
+	public InterpreterFrame(Interpreter interpreter, ShapeAmbient ambient, LexicalAnalyzer la) {
 		this.ambient = ambient;
 		this.interpreter = interpreter;
+		this.la = la;
+		
+		ic = new InterpreterController(la);
+		
 		code = new JTextArea("Code here...");
 		shapesPanel = new ShapesPanel();
 		shapesPanel.setAmbient(ambient);
@@ -101,8 +111,18 @@ public class InterpreterFrame extends JFrame {
 	}
 
 	private class RunActionListener implements ActionListener {
+		
+
+		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			try {
+				ic.interpret(getInputCode(), ambient);
+			} catch (CodeException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 			clearConsole();
 			try {
 				interpreter.interpret(getInputCode(), ambient);

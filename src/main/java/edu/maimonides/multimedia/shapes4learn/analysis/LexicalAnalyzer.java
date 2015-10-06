@@ -192,10 +192,10 @@ public class LexicalAnalyzer {
 		
 		// Se imprimien los token (lexema, clase)
 		
-		/*for (Iterator<Token> iterator = tokens.iterator(); iterator.hasNext();) {
+		for (Iterator<Token> iterator = tokens.iterator(); iterator.hasNext();) {
 			Token token = (Token) iterator.next();
 			System.out.println("Lexema: " + token.lexema + "			Clase: " + token.clase);
-		}*/
+		}
 		  	
 		return tokens;
 	}
