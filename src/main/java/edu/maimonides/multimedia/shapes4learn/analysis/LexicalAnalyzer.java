@@ -21,7 +21,7 @@ public class LexicalAnalyzer {
 		//String[] aux;
 		boolean validoNum=false;
 		//boolean validoId=true;
-		boolean ExpArit=true;
+		boolean ExpArit=false;
 		boolean reservada1=false;
 		boolean id=false;
 		
@@ -64,7 +64,7 @@ public class LexicalAnalyzer {
 			reservada1=false;
 			validoNum=false;
 			//boolean validoId=true;
-			ExpArit=false;
+			ExpArit=true;
 			reservada1=false;
 			id=false;
 			
@@ -112,9 +112,9 @@ public class LexicalAnalyzer {
 				    //Expresion aritmetica
 
 				    int f=0;
-				    char ant='a';
-
-				    for (;(f<lexemas[i].length()) && (reservada1==false);f++)
+				    char ant='a';		    
+							    
+				    for (;(f<lexemas[i].length()) && (reservada1==false) && ExpArit==true;f++)
 			        { 
 
 			        	if (Character.isDigit(lexemas[i].charAt(f)) || lexemas[i].charAt(f) == '-' ||
