@@ -64,7 +64,7 @@ public class LexicalAnalyzer {
 			reservada1=false;
 			validoNum=false;
 			//boolean validoId=true;
-			ExpArit=true;
+
 			reservada1=false;
 			id=false;
 			
@@ -180,11 +180,6 @@ public class LexicalAnalyzer {
 				    				    
 				    //Hexadecimal
 				    //System.out.println("Entra en hexadecimal el lexema " + lexemas[i]); 
-				    
-				    if (lexemas[i].matches("([a-f]|[A-F]|[0-9]|\\s)+") && validoNum==false) {
-				    	 tempToken.lexema = lexemas[i];
-						 tempToken.clase = "color_def";
-					}
 
 				    //System.out.println("Token lexema: " + i + " " + tempToken.lexema + " Token clase: " + tempToken.clase);
 				    tokens.add(i,tempToken);				    	
