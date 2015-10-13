@@ -169,7 +169,7 @@ public class LexicalAnalyzer {
 
 				    if ( lexemas[i].charAt(0)=='#')
 				    {
-				    	if (lexemas[i].substring(1).matches("([a-f]|[A-F]|[0-9]|\\s)+")) {
+				    	if (lexemas[i].substring(1).matches("([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")) {
 				    		 tempToken.lexema = lexemas[i];
 							 tempToken.clase = "color_def";
 						}else {
