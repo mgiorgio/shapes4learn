@@ -21,9 +21,10 @@ public class LexicalAnalyzer {
 		//String[] aux;
 		boolean validoNum=false;
 		//boolean validoId=true;
-		boolean ExpArit=false;
+		boolean Operadores=false;
 		boolean reservada1=false;
 		boolean id=false;
+		boolean color=false;
 		
 		// Completo la matriz token (lexemas - clase)
 		
@@ -54,7 +55,7 @@ public class LexicalAnalyzer {
 		List<Token> tokens = new LinkedList<>();
 		
 		// Separo los lexemas
-		String delimitadores= "[\\ \\	\\  \\   \\    \\		]";
+		String delimitadores= "[\\ \\	\\  \\   \\    \\		\\\n]";
 		String lexemas[] = code.split(delimitadores);
 		
 		//Recorro los lexemas y encuentro las Lexemas reservadas del lenguaje
@@ -64,9 +65,10 @@ public class LexicalAnalyzer {
 			reservada1=false;
 			validoNum=false;
 			//boolean validoId=true;
-
 			reservada1=false;
 			id=false;
+			color=false;
+			Operadores=false;
 			
 			//System.out.println("\nPosicion: " + i + " <><> Lexema que ingresa: " + lexemas[i]); 
 			
@@ -88,11 +90,24 @@ public class LexicalAnalyzer {
 					// si no es Lexema reservada
 					
 					int x=0;
+					int paso=1;
 					
 					// veo si es numero
-				    for (;x<lexemas[i].length() && Character.isDigit(lexemas[i].charAt(x)) ;x++)
+				    for (;x<lexemas[i].length() ;x++)
 				     	{ 
+				    	if ((Character.isDigit(lexemas[i].charAt(x)) && validoNum==true) || 
+				    			(Character.isDigit(lexemas[i].charAt(x)) && paso==1)) {
+				    		
 				    		validoNum=true;
+							
+						} else {
+							
+							validoNum=false;
+							
+							}
+				    	
+				    	paso=2;
+				    		
 				        }
 				    
 				    if (validoNum) {
@@ -106,31 +121,9 @@ public class LexicalAnalyzer {
 						tempToken.lexema = lexemas[i];
 			        	tempToken.clase = "Lexema desconocido";
 						}
-					}
-				    
-				    
-				    //Expresion aritmetica
-
-				    int f=0;
-				    char ant='a';		    
-							    
-				    for (;(f<lexemas[i].length()) && (reservada1==false) && ExpArit==true;f++)
-			        { 
-
-			        	if (Character.isDigit(lexemas[i].charAt(f)) || lexemas[i].charAt(f) == '-' ||
-	        				lexemas[i].charAt(f) == '*' || lexemas[i].charAt(f) == '/' 
-	        				|| lexemas[i].charAt(f) == '(' || lexemas[i].charAt(f) == ')'
-	        				|| (lexemas[i].charAt(f)) == '+')
-			        			{
-			        				ExpArit=true;
-			        			} else
-			        			
-			        			{
-			        				ExpArit=false;
-			        			}
-			        }
-				    
-			        if (ExpArit)
+					}				    		    
+				   				    
+			        /*if (ExpArit)
 			        {
 			        	tempToken.lexema = lexemas[i];
 			        	tempToken.clase = "Expresion Aritmetica";
@@ -141,7 +134,7 @@ public class LexicalAnalyzer {
 			        	tempToken.lexema = lexemas[i];
 			        	tempToken.clase = "Lexema desconocido";
 			        	}
-			        }
+			        }*/
 			        
 				    //ID bien
 			        
@@ -156,11 +149,13 @@ public class LexicalAnalyzer {
 					   // tokens.add(tempToken);	
 			        }*/
 			        
-			        if (lexemas[i].matches("([a-z]|[A-Z]|\\s)+") && reservada1==false) {
+			        if (lexemas[i].matches("([a-zA-Z])+") && reservada1==false) {
 			        	tempToken.lexema = lexemas[i];
 					    tempToken.clase = "ID";
 					    id=true;
 					}  
+			        
+			        //System.out.println("Entra en ID el lexema " + tempToken.lexema + tempToken.clase);
 				    	        
 				    //color_def
 
@@ -172,18 +167,80 @@ public class LexicalAnalyzer {
 				    	if (lexemas[i].substring(1).matches("([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")) {
 				    		 tempToken.lexema = lexemas[i];
 							 tempToken.clase = "color_def";
+							 color=true;
 						}else {
-							tempToken.lexema = lexemas[i];
-							tempToken.clase = "Lexema desconocido";
+							if (id==false && reservada1==false && validoNum == false) {
+								
+								tempToken.lexema = lexemas[i];
+								tempToken.clase = "Lexema desconocido";
+								
+							}
+							
 						}
 				   	}
 				    				    
 				    //Hexadecimal
-				    //System.out.println("Entra en hexadecimal el lexema " + lexemas[i]); 
+				    //System.out.println("Entra en hexadecimal el lexema " + lexemas[i]); 	
+				    
+				    if (lexemas[i].matches("([A-Fa-f0-9])+") && validoNum==false && id==false) {
+			    		 tempToken.lexema = lexemas[i];
+						 tempToken.clase = "Hexadecimal";
+					}else {
+						if (id==false && reservada1==false && validoNum == false && color==false) {
+							
+							tempToken.lexema = lexemas[i];
+							tempToken.clase = "Lexema desconocido";
+							
+						}
+					}
+				    
+				    //Operadores
+				    
+				    //System.out.println("Entra en Color_def el lexema " + String.valueOf('+').equals(lexemas[i])); 
+
+				    if (String.valueOf('+').equals(lexemas[i]))
+			        {
+				    	tempToken.lexema = lexemas[i];
+				    	tempToken.clase = "Operador suma";
+			        }
+				    
+				    if (String.valueOf('-').equals(lexemas[i]))
+		        	{
+			    		tempToken.lexema = lexemas[i];
+			    		tempToken.clase = "Operador resta";
+		        	}
+				    
+				    if (String.valueOf('*').equals(lexemas[i]))
+		        	{
+			    		tempToken.lexema = lexemas[i];
+			    		tempToken.clase = "Operador multiplicar";
+		        	}
+				    
+				    if (String.valueOf('/').equals(lexemas[i]))
+		        	{
+			    		tempToken.lexema = lexemas[i];
+			    		tempToken.clase = "Operador dividir";
+		        	}
+				    
+				    // Parentesis
+				    
+				    if (lexemas[i].equals('('))
+		        	{
+			    		tempToken.lexema = lexemas[i];
+			    		tempToken.clase = "Parentesis de Apertura";
+		        	}
+				    
+				    if (lexemas[i].equals(')'))
+		        	{
+			    		tempToken.lexema = lexemas[i];
+			    		tempToken.clase = "Parentesis de Cierre";
+		        	}
 
 				    //System.out.println("Token lexema: " + i + " " + tempToken.lexema + " Token clase: " + tempToken.clase);
 				    tokens.add(i,tempToken);				    	
 			}
+		
+		
 		
 		// Se imprimien los token (lexema, clase)
 		

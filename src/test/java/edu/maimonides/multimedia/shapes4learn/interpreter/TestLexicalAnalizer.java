@@ -16,8 +16,8 @@ public class TestLexicalAnalizer {
 	public void test() {
 		
 		String code1 = "create circle micirculo ; "
-				+ "setradius 5+5 in circle micirculo ; "
-				+ "setcolor #aA1 in shape micirculo ;";
+				+ "setradius 5 + 5 in circle micirculo ; "
+				+ "setcolor #aA1234 in shape micirculo ;";
 		
 		//String code1 = "create";
 		
@@ -42,7 +42,11 @@ public class TestLexicalAnalizer {
 			tok = new Token();
 			tok.setLexema("setradius");tok.setClase("setear radio");tokenValida.add(tok);
 			tok = new Token();
-			tok.setLexema("5+5");tok.setClase("Expresion Aritmetica");tokenValida.add(tok);
+			tok.setLexema("5");tok.setClase("Numero");tokenValida.add(tok);
+			tok = new Token();
+			tok.setLexema("+");tok.setClase("Operador suma");tokenValida.add(tok);
+			tok = new Token();
+			tok.setLexema("5");tok.setClase("Numero");tokenValida.add(tok);
 			tok = new Token();
 			tok.setLexema("in");tok.setClase("'in'");tokenValida.add(tok);
 			tok = new Token();
@@ -54,7 +58,7 @@ public class TestLexicalAnalizer {
 			tok = new Token();
 			tok.setLexema("setcolor");tok.setClase("setear color");tokenValida.add(tok);
 			tok = new Token();
-			tok.setLexema("#aA1");tok.setClase("color_def");tokenValida.add(tok);
+			tok.setLexema("#aA1234");tok.setClase("color_def");tokenValida.add(tok);
 			tok = new Token();
 			tok.setLexema("in");tok.setClase("'in'");tokenValida.add(tok);
 			tok = new Token();
@@ -148,7 +152,7 @@ public class TestLexicalAnalizer {
 	@Test
 	public void test3() {
 		
-		String code1 = "setradius (5+5)*3 in circle micirculo ;";
+		String code1 = "setradius ( 5 + 5 ) * 3 in circle micirculo ;";
 		
 		List<Token> tokenValida = new LinkedList<>();
 		
@@ -165,7 +169,19 @@ public class TestLexicalAnalizer {
 			Token tok = new Token();
 			tok.setLexema("setradius");tok.setClase("setear radio");tokenValida.add(tok);
 			tok = new Token();
-			tok.setLexema("(5+5)*3");tok.setClase("Expresion Aritmetica");tokenValida.add(tok);
+			tok.setLexema("(");tok.setClase("Parentesis de Apertura");tokenValida.add(tok);
+			tok = new Token();
+			tok.setLexema("5");tok.setClase("Numero");tokenValida.add(tok);
+			tok = new Token();
+			tok.setLexema("+");tok.setClase("Operador suma");tokenValida.add(tok);
+			tok = new Token();
+			tok.setLexema("5");tok.setClase("Numero");tokenValida.add(tok);
+			tok = new Token();
+			tok.setLexema(")");tok.setClase("Parentesis de Apertura");tokenValida.add(tok);
+			tok = new Token();
+			tok.setLexema("*");tok.setClase("Operador multiplicar");tokenValida.add(tok);
+			tok = new Token();
+			tok.setLexema("3");tok.setClase("Numero");tokenValida.add(tok);
 			tok = new Token();
 			tok.setLexema("in");tok.setClase("`in`");tokenValida.add(tok);
 			tok = new Token();
