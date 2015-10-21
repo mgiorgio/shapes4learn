@@ -48,9 +48,9 @@ public class LexicalAnalyzer {
 		
 		reservada[9][0] = "shape";       reservada[9][1] = "clase shape";
 		
-		reservada[10][0] = ",";           reservada[10][1] = "separador de expresiones";
+		reservada[10][0] = ",";           reservada[10][1] = "coma";
 		
-		reservada[11][0] = "in";           reservada[11][1] = "'in'";
+		reservada[11][0] = "in";           reservada[11][1] = "in";
 		
 		List<Token> tokens = new LinkedList<>();
 		
@@ -198,29 +198,29 @@ public class LexicalAnalyzer {
 				    
 				    //System.out.println("Entra en Color_def el lexema " + String.valueOf('+').equals(lexemas[i])); 
 
-				    if (String.valueOf('+').equals(lexemas[i]))
+				    if (String.valueOf('+').equals(lexemas[i]) || String.valueOf('-').equals(lexemas[i]))
 			        {
 				    	tempToken.lexema = lexemas[i];
-				    	tempToken.clase = "Operador suma";
+				    	tempToken.clase = "Adicion";
 			        }
 				    
-				    if (String.valueOf('-').equals(lexemas[i]))
+				   /* if (String.valueOf('-').equals(lexemas[i]))
 		        	{
 			    		tempToken.lexema = lexemas[i];
 			    		tempToken.clase = "Operador resta";
-		        	}
+		        	}*/
 				    
-				    if (String.valueOf('*').equals(lexemas[i]))
+				    if (String.valueOf('*').equals(lexemas[i]) || String.valueOf('/').equals(lexemas[i]))
 		        	{
 			    		tempToken.lexema = lexemas[i];
-			    		tempToken.clase = "Operador multiplicar";
+			    		tempToken.clase = "Producto";
 		        	}
 				    
-				    if (String.valueOf('/').equals(lexemas[i]))
+				    /*if (String.valueOf('/').equals(lexemas[i]))
 		        	{
 			    		tempToken.lexema = lexemas[i];
 			    		tempToken.clase = "Operador dividir";
-		        	}
+		        	}*/
 				    
 				    // Parentesis
 				    

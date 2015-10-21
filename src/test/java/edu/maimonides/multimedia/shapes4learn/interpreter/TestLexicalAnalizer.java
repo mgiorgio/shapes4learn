@@ -44,7 +44,7 @@ public class TestLexicalAnalizer {
 			tok = new Token();
 			tok.setLexema("5");tok.setClase("Numero");tokenValida.add(tok);
 			tok = new Token();
-			tok.setLexema("+");tok.setClase("Operador suma");tokenValida.add(tok);
+			tok.setLexema("+");tok.setClase("Adicion");tokenValida.add(tok);
 			tok = new Token();
 			tok.setLexema("5");tok.setClase("Numero");tokenValida.add(tok);
 			tok = new Token();
@@ -60,7 +60,7 @@ public class TestLexicalAnalizer {
 			tok = new Token();
 			tok.setLexema("#aA1234");tok.setClase("color_def");tokenValida.add(tok);
 			tok = new Token();
-			tok.setLexema("in");tok.setClase("'in'");tokenValida.add(tok);
+			tok.setLexema("in");tok.setClase("in");tokenValida.add(tok);
 			tok = new Token();
 			tok.setLexema("shape");tok.setClase("clase shape");tokenValida.add(tok);
 			tok = new Token();
@@ -173,13 +173,13 @@ public class TestLexicalAnalizer {
 			tok = new Token();
 			tok.setLexema("5");tok.setClase("Numero");tokenValida.add(tok);
 			tok = new Token();
-			tok.setLexema("+");tok.setClase("Operador suma");tokenValida.add(tok);
+			tok.setLexema("+");tok.setClase("Adicion");tokenValida.add(tok);
 			tok = new Token();
 			tok.setLexema("5");tok.setClase("Numero");tokenValida.add(tok);
 			tok = new Token();
 			tok.setLexema(")");tok.setClase("Parentesis de Apertura");tokenValida.add(tok);
 			tok = new Token();
-			tok.setLexema("*");tok.setClase("Operador multiplicar");tokenValida.add(tok);
+			tok.setLexema("*");tok.setClase("Producto");tokenValida.add(tok);
 			tok = new Token();
 			tok.setLexema("3");tok.setClase("Numero");tokenValida.add(tok);
 			tok = new Token();
