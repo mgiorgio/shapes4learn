@@ -16,6 +16,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 
 import edu.maimonides.multimedia.shapes4learn.analysis.LexicalAnalyzer;
+import edu.maimonides.multimedia.shapes4learn.analysis.SyntacticAnalyzer;
+import edu.maimonides.multimedia.shapes4learn.analysis.SyntacticException;
 import edu.maimonides.multimedia.shapes4learn.controller.InterpreterController;
 import edu.maimonides.multimedia.shapes4learn.interpreter.CodeException;
 import edu.maimonides.multimedia.shapes4learn.interpreter.Interpreter;
@@ -45,13 +47,16 @@ public class InterpreterFrame extends JFrame {
 	private LexicalAnalyzer la;
 
 	private InterpreterController ic;
+
+	private SyntacticAnalyzer sa;
 	
-	public InterpreterFrame(Interpreter interpreter, ShapeAmbient ambient, LexicalAnalyzer la) {
+	public InterpreterFrame(Interpreter interpreter, ShapeAmbient ambient, LexicalAnalyzer la, SyntacticAnalyzer sa) {
 		this.ambient = ambient;
 		this.interpreter = interpreter;
 		this.la = la;
+		this.sa = sa;
 		
-		ic = new InterpreterController(la);
+		ic = new InterpreterController(la, sa);
 		
 		code = new JTextArea("Code here...");
 		shapesPanel = new ShapesPanel();

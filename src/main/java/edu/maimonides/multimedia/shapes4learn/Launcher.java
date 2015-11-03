@@ -3,6 +3,7 @@ package edu.maimonides.multimedia.shapes4learn;
 import javax.swing.JOptionPane;
 
 import edu.maimonides.multimedia.shapes4learn.analysis.LexicalAnalyzer;
+import edu.maimonides.multimedia.shapes4learn.analysis.SyntacticAnalyzer;
 import edu.maimonides.multimedia.shapes4learn.controller.InterpreterController;
 import edu.maimonides.multimedia.shapes4learn.gui.InterpreterFrame;
 import edu.maimonides.multimedia.shapes4learn.interpreter.Interpreter;
@@ -33,7 +34,9 @@ public class Launcher {
 		try {
 			LexicalAnalyzer lexAn = new LexicalAnalyzer();
 			
-			frame = new InterpreterFrame(createInterpreter(classname), new BasicShapeAmbient(), lexAn);
+			SyntacticAnalyzer synAn = new SyntacticAnalyzer();
+			
+			frame = new InterpreterFrame(createInterpreter(classname), new BasicShapeAmbient(), lexAn, synAn );
 			frame.init();
 			frame.setVisible(true);
 		} catch (ClassNotFoundException e) {
