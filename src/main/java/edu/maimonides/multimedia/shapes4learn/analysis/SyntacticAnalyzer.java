@@ -3,6 +3,7 @@ package edu.maimonides.multimedia.shapes4learn.analysis;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import edu.maimonides.multimedia.shapes4learn.model.AST;
 import edu.maimonides.multimedia.shapes4learn.model.Token;
 
@@ -74,6 +75,9 @@ public void checkSent(List<Token> tokens){
 			
 			//Cambiar clase
 		
+			System.out.println("\n");
+			System.out.println("---- Comienza el análisis de una sentencia -----\n");
+			System.out.println("\n");
 			
 		
 			if (lookahead == "crear"){
@@ -333,6 +337,7 @@ private boolean matchSetRadio(String string) {
 //	create rectangle|circle [id];
 	
 	private void checkCreate(String string) {
+		System.out.println("Se espera: create rectangle|circle [id]");
 		matchCreate(string);		
 		checkShape(lookahead);
 		matchId(lookahead);
