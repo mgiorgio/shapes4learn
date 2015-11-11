@@ -187,13 +187,45 @@ private boolean matchSetRadio(String string) {
 	private void checkSetColor(String string) {
 		
 		System.out.println("setcolor [color_def] in shape [id] ;");
-		matchSetColor(string);		
+		
+		AST setcolor = new AST();
+		setcolor.setLinea(linea);
+		setcolor.setToken(token);
+		
+		matchSetColor(string);
+		
+		AST color_def = new AST();
+		color_def.setLinea(linea);
+		color_def.setToken(token);
+		
+		setcolor.addChild(color_def);
+		
 		matchColorDef(lookahead);
+		
 		matchIn(lookahead);
 		matchShape(lookahead);
+		
+		AST id = new AST();
+		id.setLinea(linea);
+		id.setToken(token);
+		
+		setcolor.addChild(id);
+		
 		matchId(lookahead);
 		matchFin(lookahead);
 		
+		raiz.addChild(setcolor);
+		String a = raiz.getChild(1).getToken().getLexema();
+	    String b = raiz.getChild(1).getChild(0).getToken().getLexema();
+	    String c = raiz.getChild(1).getChild(1).getToken().getLexema();
+		
+	    System.out.printf("Muestro arbol de set color: ");
+	    
+		System.out.printf("-  1: %s", a);
+		System.out.printf("- 2: %s", b);
+		System.out.printf("- 3: %s", c);
+
+				
 	}
 	
 	private boolean matchShape(String string) {
@@ -211,7 +243,7 @@ private boolean matchSetRadio(String string) {
 	}
 
 	private boolean matchIn(String string) {
-		if(string == "'in'"){
+		if(string == "in"){
 			System.out.println("Es in");
 			token = (Token) iterator.next();
 			lookahead = token.getClase();
@@ -365,6 +397,8 @@ private boolean matchSetRadio(String string) {
 		String a = raiz.getChild(0).getToken().getLexema();
 	    String b = raiz.getChild(0).getChild(0).getToken().getLexema();
 	    String c = raiz.getChild(0).getChild(1).getToken().getLexema();
+	    
+	    System.out.printf("Muestro arbol de crear: ");
 		
 		System.out.printf("-  1: %s", a);
 		System.out.printf("- 2: %s", b);
