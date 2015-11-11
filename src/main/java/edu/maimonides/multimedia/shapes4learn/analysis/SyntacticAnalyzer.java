@@ -16,11 +16,13 @@ import edu.maimonides.multimedia.shapes4learn.model.Token;
  * 
  */
 public class SyntacticAnalyzer {
-
+	
+	private int linea=0;
 	private String sentencia;
 	private String lookahead;
 	private Token token;
 	private Iterator<Token> iterator;
+	private AST raiz = new AST();
 
 	public SyntacticAnalyzer() {
 	}
@@ -28,7 +30,6 @@ public class SyntacticAnalyzer {
 	public AST analyze(List<Token> tokens) throws SyntacticException {
 		
 		List<String> sentencias = new LinkedList<>();
-		AST ast = new AST();
 
 		sentencia = new String();
 		
@@ -62,7 +63,7 @@ public class SyntacticAnalyzer {
 		
 		
 		  	
-		return ast;
+		return raiz;
 	}
 	
 public void checkSent(List<Token> tokens){
@@ -79,7 +80,8 @@ public void checkSent(List<Token> tokens){
 			System.out.println("---- Comienza el análisis de una sentencia -----\n");
 			System.out.println("\n");
 			
-		
+			linea++;
+			
 			if (lookahead == "crear"){
 				checkCreate(lookahead);
 			}
@@ -121,6 +123,8 @@ private void checkPosition(String string) {
 	matchShape(lookahead);
 	matchId(lookahead);
 	matchFin(lookahead);
+	
+	
 	
 	
 }
@@ -337,13 +341,36 @@ private boolean matchSetRadio(String string) {
 //	create rectangle|circle [id];
 	
 	private void checkCreate(String string) {
+		
 		System.out.println("Se espera: create rectangle|circle [id]");
-		matchCreate(string);		
-		checkShape(lookahead);
+		AST create = new AST();
+		create.setLinea(linea);
+		create.setToken(token);
+		
+		matchCreate(string);
+		
+		AST shape = checkShape(lookahead);
+		create.addChild(shape);
+		
+		AST id = new AST();
+		id.setLinea(linea);
+		id.setToken(token);
 		matchId(lookahead);
+		
+		create.addChild(id);
+		
 		matchFin(lookahead);
 		
-		}
+		raiz.addChild(create);
+		String a = raiz.getChild(0).getToken().getLexema();
+	    String b = raiz.getChild(0).getChild(0).getToken().getLexema();
+	    String c = raiz.getChild(0).getChild(1).getToken().getLexema();
+		
+		System.out.printf("-  1: %s", a);
+		System.out.printf("- 2: %s", b);
+		System.out.printf("- 3: %s", c);
+	}
+		
 		
 	
 
@@ -362,25 +389,28 @@ private boolean matchSetRadio(String string) {
 		
 	}
 
-	private void checkShape(String string) {
+	private AST checkShape(String string) {
+		
+		AST figura = new AST();
+		figura.setLinea(linea);
+		figura.setToken(token);
 		
 		if (string == "ShapeCirculo"){
 			System.out.println("Es circle");
 			matchCircle(lookahead);
-			
 		}else {
 			if (string == "ShapeRectangulo"){
 				System.out.println("Es rectangle");
 				matchRectangle(lookahead);
-			
+				
 			} else {
 				System.out.printf("Vino %s, se esperaba una figura \n ", string);
 				System.out.close();
 				
 			}
 		
-		
 		}
+		return figura;
 
 	}
 
