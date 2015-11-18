@@ -1,10 +1,12 @@
 package edu.maimonides.multimedia.shapes4learn.analysis;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import edu.maimonides.multimedia.shapes4learn.model.AST;
+import edu.maimonides.multimedia.shapes4learn.model.Figura;
 import edu.maimonides.multimedia.shapes4learn.model.Token;
 
 /**
@@ -23,6 +25,7 @@ public class SyntacticAnalyzer {
 	private Token token;
 	private Iterator<Token> iterator;
 	private AST raiz = new AST();
+	private ArrayList<Figura> figuras; //pasar al semantico
 
 	public SyntacticAnalyzer() {
 	}
@@ -60,13 +63,86 @@ public class SyntacticAnalyzer {
 		}
 	
 		checkSent(tokens);  
-		
-		
+		System.out.println("\n Valida Arbol");
+		validarArbol(raiz);
 		  	
 		return raiz;
 	}
 	
+private void validarArbol(AST raiz2) {
+		// TODO Auto-generated method stub
+	System.out.println("\n");
+	System.out.println("--- Comienza Analisis semantico ----- ");
+	System.out.println("\n");
+	
+	
+	
+	for (Iterator<AST> it = raiz2.listChildren().iterator(); it.hasNext();) {
+		
+	AST arbol = it.next();
+		
+	String lexema = arbol.getToken().getClase();
+	String tipo = arbol.getChild(0).getToken().getLexema();
+    String id = arbol.getChild(1).getToken().getLexema();
+    
+	
+    
+	if (lexema.equals("crear"))
+	{
+		System.out.println("Entra por create");
+		
+		Figura figuraNueva = new Figura();
+	
+		if(figuras.isEmpty()){
+			figuraNueva.setClase(tipo);
+			figuraNueva.setId(id);
+			figuras.add(figuraNueva);
+			
+			System.out.println("Se creo una figura");
+		}
+		
+		else
+		
+		{
+			for (Iterator<Figura> iterator = figuras.iterator(); iterator.hasNext();) {
+				
+				
+				
+				if(iterator.next().getId().equals(id)){
+					
+					System.out.println("Ya existe ese ID para otra figura");
+					System.exit(0);
+					
+				}
+				
+				figuraNueva.setClase(tipo);
+				figuraNueva.setId(id);
+				System.out.println("Se creo una figura");
+			}
+			
+			figuras.add(figuraNueva);
+		}
+		
+	}
+		
+		
+		
+	}
+	
+	for (Iterator<Figura> iterator = figuras.iterator(); iterator.hasNext();) {
+		Figura fig = iterator.next();
+		System.out.println("\n");
+		
+		System.out.printf(" Figura: %s Clase %s", fig.getId() , fig.getClase());
+		
+	}
+	
+	
+	}
+
 public void checkSent(List<Token> tokens){
+	
+		figuras = new ArrayList<>();
 		
 		for (iterator = tokens.iterator(); iterator.hasNext();) {
 			
@@ -107,13 +183,14 @@ public void checkSent(List<Token> tokens){
 				checkPosition(lookahead);
 			}
 		}
+	
 		
 	}
 
 
 //  setposition [expression],[expression] in shape [id] ;
 
-private void checkPosition(String string) {
+/*private void checkPosition(String string) {
 	System.out.println("setposition [expression],[expression] in shape [id] ;");
 	matchSetPosition(string);
 	checkExpresion(lookahead);
@@ -127,12 +204,12 @@ private void checkPosition(String string) {
 	
 	
 	
-}
+}*/
 
 
 //	setradius [expression] in circle [id] ;
 
-private boolean matchComa(String string) {
+/*private boolean matchComa(String string) {
 	if(string == "separador de expresiones"){
 		System.out.println("Es Coma");
 		token = (Token) iterator.next();
@@ -140,6 +217,78 @@ private boolean matchComa(String string) {
 		return true;
 	}
 	System.out.println("No es Coma. Error");
+	System.out.close();
+	return false;
+	
+}*/
+
+private void checkPosition(String string) {
+	
+System.out.println("setposition [expression],[expression] in shape [id] ;");
+		AST setposition = new AST();
+		setposition.setLinea(linea);
+		setposition.setToken(token);
+		
+		matchSetPosition(string);
+		
+		AST position_def = new AST();
+		position_def.setLinea(linea);
+		position_def.setToken(token);
+		
+		setposition.addChild(position_def);
+		
+		checkExpresion(lookahead);
+		
+		matchComa(lookahead);
+		
+		AST position_def2 = new AST();
+		position_def2.setLinea(linea);
+		position_def2.setToken(token);
+		
+		setposition.addChild(position_def2);
+		
+		checkExpresion(lookahead);
+		
+		matchIn(lookahead);
+		matchShape(lookahead);
+		
+		AST id = new AST();
+		id.setLinea(linea);
+		id.setToken(token);
+		
+		setposition.addChild(id);
+		
+		matchId(lookahead);
+		matchFin(lookahead);
+		
+		raiz.addChild(setposition);
+		
+	    String a = raiz.getChild(0).getToken().getLexema();
+	    String b = raiz.getChild(0).getChild(0).getToken().getLexema();
+	    String c = raiz.getChild(0).getChild(1).getToken().getLexema();
+	    String d = raiz.getChild(0).getChild(2).getToken().getLexema();
+
+		
+	    System.out.printf("Muestro arbol de set posición: ");
+	    
+		System.out.printf(" - 1: %s", a);
+		System.out.printf(" - 2: %s", b);
+		System.out.printf(" - 3: %s", c);
+		System.out.printf(" - 4: %s", d);
+
+				
+	}
+
+private boolean matchComa(String coma) {
+	// TODO Auto-generated method stub
+	
+	if(coma == "coma"){
+		System.out.println("Es coma");
+		token = (Token) iterator.next();
+		lookahead = token.getClase();
+		return true;
+	}
+	System.out.printf("Vino %s, se esperaba coma.", coma);
 	System.out.close();
 	return false;
 	
@@ -159,6 +308,49 @@ private boolean matchSetPosition(String string) {
 }
 
 private void checkRadio(String string) {
+	
+System.out.println("setradius [expression] in circle [id] ;");
+		AST setradio = new AST();
+		setradio.setLinea(linea);
+		setradio.setToken(token);
+		
+		matchSetRadio(string);
+		
+		AST radio_def = new AST();
+		radio_def.setLinea(linea);
+		radio_def.setToken(token);
+		
+		setradio.addChild(radio_def);
+		
+		checkExpresion(lookahead);
+		
+		matchIn(lookahead);
+		matchCircle(lookahead);
+		
+		AST id = new AST();
+		id.setLinea(linea);
+		id.setToken(token);
+		
+		setradio.addChild(id);
+		
+		matchId(lookahead);
+		matchFin(lookahead);
+		
+		raiz.addChild(setradio);
+	    String a = raiz.getChild(0).getToken().getLexema();
+	    String b = raiz.getChild(0).getChild(0).getToken().getLexema();
+	    String c = raiz.getChild(0).getChild(1).getToken().getLexema();
+		
+	    System.out.printf("Muestro arbol de set radio: ");
+	    
+		System.out.printf(" - 1: %s", a);
+		System.out.printf(" - 2: %s", b);
+		System.out.printf(" - 3: %s", c);
+
+				
+	}
+
+/*private void checkRadio(String string) {
 	System.out.println("setradius [expression] in circle [id] ;");
 	matchSetRadio(string);
 	checkExpresion(lookahead);
@@ -167,7 +359,7 @@ private void checkRadio(String string) {
 	matchId(lookahead);
 	matchFin(lookahead);
 	
-}
+}*/
 
 private boolean matchSetRadio(String string) {
 	if(string == "setear radio"){
@@ -260,15 +452,60 @@ private boolean matchSetRadio(String string) {
 //	setheight [expression] in rectangle [id] ;
 	
 	private void checkSetHeight(String string) {
+		
 		System.out.println("setheight [expression] in rectangle [id] ;");
+				
+				AST setheight = new AST();
+				setheight.setLinea(linea);
+				setheight.setToken(token);
+				
+				matchSetHeight(string);
+				
+				AST height_def = new AST();
+				height_def.setLinea(linea);
+				height_def.setToken(token);
+				
+				setheight.addChild(height_def);
+				
+				checkExpresion(lookahead);
+				
+				matchIn(lookahead);
+				matchRectangle(lookahead);
+				
+				AST id = new AST();
+				id.setLinea(linea);
+				id.setToken(token);
+				
+				setheight.addChild(id);
+				
+				matchId(lookahead);
+				matchFin(lookahead);
+				
+				raiz.addChild(setheight);
+			    String a = raiz.getChild(0).getToken().getLexema();
+			    String b = raiz.getChild(0).getChild(0).getToken().getLexema();
+			    String c = raiz.getChild(0).getChild(1).getToken().getLexema();
+				
+			    System.out.printf("Muestro arbol de set height: ");
+			    
+				System.out.printf("-  1: %s", a);
+				System.out.printf("- 2: %s", b);
+				System.out.printf("- 3: %s", c);
+
+						
+			}
+	
+	/*private void checkSetHeight(String string) {
+		System.out.println("setheight [expression] in rectangle [id] ;");
+		
 		matchSetHeight(string);		
 		checkExpresion(lookahead);
 		matchIn(lookahead);
 		matchRectangle(lookahead);
 		matchId(lookahead);
 		matchFin(lookahead);
-		
-	}
+
+	}*/
 	
 
 	
@@ -289,6 +526,48 @@ private boolean matchSetRadio(String string) {
 	
 	private void checkSetBase(String string) {
 		
+		System.out.println("setbase [expression] in rectangle [id] ;");		
+				AST setbase = new AST();
+				setbase.setLinea(linea);
+				setbase.setToken(token);
+				
+				matchSetBase(string);
+				
+				AST base_def = new AST();
+				base_def.setLinea(linea);
+				base_def.setToken(token);
+				
+				setbase.addChild(base_def);
+				
+				checkExpresion(lookahead);
+				
+				matchIn(lookahead);
+				matchRectangle(lookahead);
+				
+				AST id = new AST();
+				id.setLinea(linea);
+				id.setToken(token);
+				
+				setbase.addChild(id);
+				
+				matchId(lookahead);
+				matchFin(lookahead);
+				
+				raiz.addChild(setbase);
+			    String a = raiz.getChild(0).getToken().getLexema();
+			    String b = raiz.getChild(0).getChild(0).getToken().getLexema();
+			    String c = raiz.getChild(0).getChild(1).getToken().getLexema();
+				
+			    System.out.printf("Muestro arbol de set base: ");
+			    
+				System.out.printf(" - 1: %s", a);
+				System.out.printf(" - 2: %s", b);
+				System.out.printf(" - 3: %s", c);
+						
+			}
+	
+	/*private void checkSetBase(String string) {
+
 		System.out.println("setbase [expression] in rectangle [id] ;");
 		matchSetBase(string);		
 		checkExpresion(lookahead);
@@ -297,7 +576,7 @@ private boolean matchSetRadio(String string) {
 		matchId(lookahead);
 		matchFin(lookahead);
 		
-	}
+	}*/
 
 	private boolean matchSetBase(String string) {
 		if(string == "setear base"){
@@ -387,6 +666,7 @@ private boolean matchSetRadio(String string) {
 		AST id = new AST();
 		id.setLinea(linea);
 		id.setToken(token);
+		
 		matchId(lookahead);
 		
 		create.addChild(id);
@@ -403,6 +683,7 @@ private boolean matchSetRadio(String string) {
 		System.out.printf("-  1: %s", a);
 		System.out.printf("- 2: %s", b);
 		System.out.printf("- 3: %s", c);
+		
 	}
 		
 		

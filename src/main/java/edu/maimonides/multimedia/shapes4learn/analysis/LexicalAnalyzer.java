@@ -38,7 +38,7 @@ public class LexicalAnalyzer {
 		
 		reservada[4][0] = "setbase";      reservada[4][1] = "setear base";
 		
-		reservada[5][0] = "sethight";     reservada[5][1] = "setear altura";
+		reservada[5][0] = "setheight";     reservada[5][1] = "setear altura";
 		
 		reservada[6][0] = "setcolor";     reservada[6][1] = "setear color";
 		
