@@ -14,7 +14,6 @@ import edu.maimonides.multimedia.shapes4learn.model.Token;
  * 
  */
 public class LexicalAnalyzer {
-
 	public List<Token> analyze(String code) throws LexicalException {
 		
 		String[][] reservada = new String[20][20];
@@ -224,16 +223,16 @@ public class LexicalAnalyzer {
 				    
 				    // Parentesis
 				    
-				    if (lexemas[i].equals('('))
+				    if (String.valueOf('(').equals(lexemas[i]) )
 		        	{
 			    		tempToken.lexema = lexemas[i];
-			    		tempToken.clase = "Parentesis de Apertura";
+			    		tempToken.clase = "Parentesis A";
 		        	}
 				    
-				    if (lexemas[i].equals(')'))
+				    if (String.valueOf(')').equals(lexemas[i]) )
 		        	{
 			    		tempToken.lexema = lexemas[i];
-			    		tempToken.clase = "Parentesis de Cierre";
+			    		tempToken.clase = "Parentesis C";
 		        	}
 
 				    //System.out.println("Token lexema: " + i + " " + tempToken.lexema + " Token clase: " + tempToken.clase);

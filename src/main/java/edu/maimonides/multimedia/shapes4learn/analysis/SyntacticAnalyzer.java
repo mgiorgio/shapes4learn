@@ -592,18 +592,141 @@ private boolean matchSetRadio(String string) {
 	}
 
 	private void checkExpresion(String string) {
+		System.out.println("CHECK EXPRESION");
 		
-		if (string == "Numero"){
-			System.out.println("Es numero");
-			token = (Token) iterator.next();
-			lookahead = token.getClase();
-			checkExpresion(lookahead);
-		} 
+		checkTermino(string);
+		checkTerminoR(lookahead);
+
 		
 	
-			
+}
+
+private void checkTerminoR(String string) {
+	System.out.println("CHECK TERMINO R");
+	if (!matchLamda(string)){
+		
+		if(!matchAdicion(string)){
+			checkFactor(string);
+		}
+		else{
+		checkTerminoR(lookahead);}	
+	} else {
+		matchLamda(string);
+	}
+	
+	
+}
+
+private boolean matchLamda(String string) {
+	if(string == "in" || string == "coma" ){
+		System.out.println("Termino expresion.");
+		
+		return true;
+	} else {
+		if(matchCierroP(string)){
+			return true;
+		}else{
+		System.out.printf("Vino %s, se esperaba termino expresion \n ", string);
+		return false;
+		}
+	}
+}
+
+private void checkFactor(String string) {
+	System.out.println("CHECK FACTOR");
+	if (string == "Numero"){
+		matchNumero(string);}
+	else{
+		if(matchAbroP(string)){
+		checkExpresion(lookahead);
+	//	matchCierroP(lookahead);
+		}else{
+			matchCierroP(string);
+		}
 		
 	}
+	
+}
+
+private boolean matchNumero(String string) {
+	if(string == "Numero"){
+		System.out.println("Es Numero.");
+		token = (Token) iterator.next();
+		lookahead = token.getClase();
+		return true;
+	} else {
+		System.out.printf("Vino %s, se esperaba un numero valido \n ", string);
+		System.out.close();
+		return false;
+	}
+	
+}
+
+private boolean matchAdicion(String string) {
+	if(string == "Adicion"){
+		System.out.println("Es Adicion.");
+		token = (Token) iterator.next();
+		lookahead = token.getClase();
+		return true;
+	} else {
+		return false;
+	}
+	
+}
+
+
+
+private void checkTermino(String string) {
+	System.out.println("CHECK TERMINO");
+	checkFactor(string);
+	checkFactorR(lookahead);
+	
+}
+
+private void checkFactorR(String string) {
+	System.out.println("CHECK FACTOR R");
+	
+	if (!matchLamda(string)){
+	
+		if(matchAbroP(string)){
+		checkExpresion(lookahead);
+//		matchCierroP(lookahead);
+		}
+		
+	}
+		
+	
+	
+}
+
+private boolean matchCierroP(String string) {
+	if(string == "Parentesis C"){
+		System.out.println("Es cierre parentesis");
+		token = (Token) iterator.next();
+		lookahead = token.getClase();
+		return true;
+	}
+	System.out.printf("Vino %s, se esperaba ')'. \n", string);
+	
+	return false;
+	
+}
+//setbase ( 4 ) in rectangle id ;
+
+private boolean matchAbroP(String string) {
+	if(string == "Parentesis A"){
+		System.out.println("Es abro parentesis");
+		token = (Token) iterator.next();
+		lookahead = token.getClase();
+		return true;
+	}
+	System.out.printf("Vino %s, se esperaba '('. \n", string);
+	
+	return false;
+	
+}
+		
+	
 
 	private void matchFin(String string) {
 		
