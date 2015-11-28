@@ -25,6 +25,7 @@ public class SyntacticAnalyzer {
 	private Token token;
 	private Iterator<Token> iterator;
 	private AST raiz = new AST();
+	private AST expG = new AST();
 	private ArrayList<Figura> figuras; //pasar al semantico
 
 	public SyntacticAnalyzer() {
@@ -56,14 +57,14 @@ public class SyntacticAnalyzer {
 			
 		}
 		
-		for (Iterator<String> iterator = sentencias.iterator(); iterator.hasNext();) {
-			String sent = iterator.next();
-			System.out.println("Setencia: " + sent);
+	//	for (Iterator<String> iterator = sentencias.iterator(); iterator.hasNext();) {
+		//	String sent = iterator.next();
+			//System.out.println("Setencia: " + sent);
 			
-		}
+		//}
 	
 		checkSent(tokens);  
-		System.out.println("\n Valida Arbol");
+
 		validarArbol(raiz);
 		  	
 		return raiz;
@@ -71,11 +72,39 @@ public class SyntacticAnalyzer {
 	
 private void validarArbol(AST raiz2) {
 		// TODO Auto-generated method stub
+
+	
+	System.out.println("--- Árboles ----- ");
+	System.out.println("\n");
+	
+	for (Iterator<AST> it = raiz2.listChildren().iterator(); it.hasNext();) {
+		AST arbol = it.next();
+		
+		String lexema = arbol.getToken().getClase();
+		
+		System.out.println("    " + lexema);
+		
+		String s = new String();
+		
+		for(int a = 0 ; a < arbol.listChildren().size(); a++ ){
+			
+			String tipo = arbol.getChild(a).getToken().getLexema();
+
+			
+			s = s + tipo + "   " ;
+			
+		}
+		System.out.println(s);
+		System.out.println("\n");
+		
+	}
+	
+	System.out.println("---  Fin Árboles ----- ");
+	System.out.println("\n");
+	
 	System.out.println("\n");
 	System.out.println("--- Comienza Analisis semantico ----- ");
 	System.out.println("\n");
-	
-	
 	
 	for (Iterator<AST> it = raiz2.listChildren().iterator(); it.hasNext();) {
 		
@@ -89,8 +118,6 @@ private void validarArbol(AST raiz2) {
     
 	if (lexema.equals("crear"))
 	{
-		System.out.println("Entra por create");
-		
 		Figura figuraNueva = new Figura();
 	
 		if(figuras.isEmpty()){
@@ -98,7 +125,7 @@ private void validarArbol(AST raiz2) {
 			figuraNueva.setId(id);
 			figuras.add(figuraNueva);
 			
-			System.out.println("Se creo una figura");
+			
 		}
 		
 		else
@@ -110,14 +137,14 @@ private void validarArbol(AST raiz2) {
 				
 				if(iterator.next().getId().equals(id)){
 					
-					System.out.println("Ya existe ese ID para otra figura");
+					System.out.printf("Ya existe el ID \"%s\" para otra figura", id);
 					System.exit(0);
 					
 				}
 				
 				figuraNueva.setClase(tipo);
 				figuraNueva.setId(id);
-				System.out.println("Se creo una figura");
+				System.out.println("Se creo una figura.");
 			}
 			
 			figuras.add(figuraNueva);
@@ -133,7 +160,7 @@ private void validarArbol(AST raiz2) {
 		Figura fig = iterator.next();
 		System.out.println("\n");
 		
-		System.out.printf(" Figura: %s Clase %s", fig.getId() , fig.getClase());
+		System.out.printf(" Figura creada: %s Clase %s", fig.getId() , fig.getClase());
 		
 	}
 	
@@ -152,11 +179,10 @@ public void checkSent(List<Token> tokens){
 			
 			//Cambiar clase
 		
-			System.out.println("\n");
-			System.out.println("---- Comienza el análisis de una sentencia -----\n");
-			System.out.println("\n");
+			
 			
 			linea++;
+			System.out.println("\n");
 			
 			if (lookahead == "crear"){
 				checkCreate(lookahead);
@@ -188,43 +214,10 @@ public void checkSent(List<Token> tokens){
 	}
 
 
-//  setposition [expression],[expression] in shape [id] ;
-
-/*private void checkPosition(String string) {
-	System.out.println("setposition [expression],[expression] in shape [id] ;");
-	matchSetPosition(string);
-	checkExpresion(lookahead);
-	matchComa(lookahead);
-	checkExpresion(lookahead);
-	matchIn(lookahead);
-	matchShape(lookahead);
-	matchId(lookahead);
-	matchFin(lookahead);
-	
-	
-	
-	
-}*/
-
-
-//	setradius [expression] in circle [id] ;
-
-/*private boolean matchComa(String string) {
-	if(string == "separador de expresiones"){
-		System.out.println("Es Coma");
-		token = (Token) iterator.next();
-		lookahead = token.getClase();
-		return true;
-	}
-	System.out.println("No es Coma. Error");
-	System.out.close();
-	return false;
-	
-}*/
 
 private void checkPosition(String string) {
 	
-System.out.println("setposition [expression],[expression] in shape [id] ;");
+
 		AST setposition = new AST();
 		setposition.setLinea(linea);
 		setposition.setToken(token);
@@ -263,33 +256,20 @@ System.out.println("setposition [expression],[expression] in shape [id] ;");
 		
 		raiz.addChild(setposition);
 		
-	    String a = raiz.getChild(0).getToken().getLexema();
-	    String b = raiz.getChild(0).getChild(0).getToken().getLexema();
-	    String c = raiz.getChild(0).getChild(1).getToken().getLexema();
-	    String d = raiz.getChild(0).getChild(2).getToken().getLexema();
-
-		
-	    System.out.printf("Muestro arbol de set posición: ");
-	    
-		System.out.printf(" - 1: %s", a);
-		System.out.printf(" - 2: %s", b);
-		System.out.printf(" - 3: %s", c);
-		System.out.printf(" - 4: %s", d);
 
 				
 	}
 
 private boolean matchComa(String coma) {
-	// TODO Auto-generated method stub
-	
+
 	if(coma == "coma"){
-		System.out.println("Es coma");
+		//System.out.println("Es coma");
 		token = (Token) iterator.next();
 		lookahead = token.getClase();
 		return true;
 	}
 	System.out.printf("Vino %s, se esperaba coma.", coma);
-	System.out.close();
+	System.exit(0);
 	return false;
 	
 }
@@ -302,14 +282,14 @@ private boolean matchSetPosition(String string) {
 		return true;
 	}
 	System.out.printf("Vino %s, se esperaba setPosition.", string);
-	System.out.close();
+	System.exit(0);
 	return false;
 	
 }
 
 private void checkRadio(String string) {
 	
-System.out.println("setradius [expression] in circle [id] ;");
+System.out.println("Se espera: setradius [expression] in circle [id] ;");
 		AST setradio = new AST();
 		setradio.setLinea(linea);
 		setradio.setToken(token);
@@ -317,6 +297,7 @@ System.out.println("setradius [expression] in circle [id] ;");
 		matchSetRadio(string);
 		
 		AST radio_def = new AST();
+		
 		radio_def.setLinea(linea);
 		radio_def.setToken(token);
 		
@@ -337,29 +318,10 @@ System.out.println("setradius [expression] in circle [id] ;");
 		matchFin(lookahead);
 		
 		raiz.addChild(setradio);
-	    String a = raiz.getChild(0).getToken().getLexema();
-	    String b = raiz.getChild(0).getChild(0).getToken().getLexema();
-	    String c = raiz.getChild(0).getChild(1).getToken().getLexema();
-		
-	    System.out.printf("Muestro arbol de set radio: ");
-	    
-		System.out.printf(" - 1: %s", a);
-		System.out.printf(" - 2: %s", b);
-		System.out.printf(" - 3: %s", c);
 
 				
 	}
 
-/*private void checkRadio(String string) {
-	System.out.println("setradius [expression] in circle [id] ;");
-	matchSetRadio(string);
-	checkExpresion(lookahead);
-	matchIn(lookahead);
-	matchCircle(lookahead);
-	matchId(lookahead);
-	matchFin(lookahead);
-	
-}*/
 
 private boolean matchSetRadio(String string) {
 	if(string == "setear radio"){
@@ -369,7 +331,7 @@ private boolean matchSetRadio(String string) {
 		return true;
 	}
 	System.out.printf("Vino %s, se esperaba setRadio.", string);
-	System.out.close();
+	System.exit(0);
 	return false;
 		
 	}
@@ -378,7 +340,7 @@ private boolean matchSetRadio(String string) {
 
 	private void checkSetColor(String string) {
 		
-		System.out.println("setcolor [color_def] in shape [id] ;");
+		System.out.println("Se espera: setcolor [color_def] in shape [id] ;");
 		
 		AST setcolor = new AST();
 		setcolor.setLinea(linea);
@@ -407,15 +369,7 @@ private boolean matchSetRadio(String string) {
 		matchFin(lookahead);
 		
 		raiz.addChild(setcolor);
-		String a = raiz.getChild(1).getToken().getLexema();
-	    String b = raiz.getChild(1).getChild(0).getToken().getLexema();
-	    String c = raiz.getChild(1).getChild(1).getToken().getLexema();
-		
-	    System.out.printf("Muestro arbol de set color: ");
-	    
-		System.out.printf("-  1: %s", a);
-		System.out.printf("- 2: %s", b);
-		System.out.printf("- 3: %s", c);
+	
 
 				
 	}
@@ -428,7 +382,7 @@ private boolean matchSetRadio(String string) {
 			return true;
 		}
 		System.out.printf("Vino %s, se esperaba 'shape'", string);
-		System.out.close();
+		System.exit(0);
 		return false;
 		
 		
@@ -442,7 +396,7 @@ private boolean matchSetRadio(String string) {
 			return true;
 		}
 		System.out.printf("Vino %s, se esperaba 'in'", string);
-		System.out.close();
+		System.exit(0);
 		return false;
 		
 		
@@ -453,7 +407,7 @@ private boolean matchSetRadio(String string) {
 	
 	private void checkSetHeight(String string) {
 		
-		System.out.println("setheight [expression] in rectangle [id] ;");
+		System.out.println("Se espera: setheight [expression] in rectangle [id] ;");
 				
 				AST setheight = new AST();
 				setheight.setLinea(linea);
@@ -482,31 +436,11 @@ private boolean matchSetRadio(String string) {
 				matchFin(lookahead);
 				
 				raiz.addChild(setheight);
-			    String a = raiz.getChild(0).getToken().getLexema();
-			    String b = raiz.getChild(0).getChild(0).getToken().getLexema();
-			    String c = raiz.getChild(0).getChild(1).getToken().getLexema();
-				
-			    System.out.printf("Muestro arbol de set height: ");
-			    
-				System.out.printf("-  1: %s", a);
-				System.out.printf("- 2: %s", b);
-				System.out.printf("- 3: %s", c);
+		
 
 						
 			}
-	
-	/*private void checkSetHeight(String string) {
-		System.out.println("setheight [expression] in rectangle [id] ;");
-		
-		matchSetHeight(string);		
-		checkExpresion(lookahead);
-		matchIn(lookahead);
-		matchRectangle(lookahead);
-		matchId(lookahead);
-		matchFin(lookahead);
 
-	}*/
-	
 
 	
 	private boolean matchSetHeight(String string) {
@@ -517,7 +451,7 @@ private boolean matchSetRadio(String string) {
 			return true;
 		}
 		System.out.printf("Vino %s, se esperaba setHeight.", string);
-		System.out.close();
+		System.exit(0);
 		return false;
 		
 	}
@@ -526,57 +460,27 @@ private boolean matchSetRadio(String string) {
 	
 	private void checkSetBase(String string) {
 		
-		System.out.println("setbase [expression] in rectangle [id] ;");		
-				AST setbase = new AST();
-				setbase.setLinea(linea);
-				setbase.setToken(token);
+		System.out.println("Se espera: setbase [expression] in rectangle [id] ;");		
 				
 				matchSetBase(string);
 				
-				AST base_def = new AST();
-				base_def.setLinea(linea);
-				base_def.setToken(token);
-				
-				setbase.addChild(base_def);
 				
 				checkExpresion(lookahead);
 				
+			
+				
 				matchIn(lookahead);
 				matchRectangle(lookahead);
+		
 				
-				AST id = new AST();
-				id.setLinea(linea);
-				id.setToken(token);
-				
-				setbase.addChild(id);
+			
 				
 				matchId(lookahead);
 				matchFin(lookahead);
 				
-				raiz.addChild(setbase);
-			    String a = raiz.getChild(0).getToken().getLexema();
-			    String b = raiz.getChild(0).getChild(0).getToken().getLexema();
-			    String c = raiz.getChild(0).getChild(1).getToken().getLexema();
-				
-			    System.out.printf("Muestro arbol de set base: ");
-			    
-				System.out.printf(" - 1: %s", a);
-				System.out.printf(" - 2: %s", b);
-				System.out.printf(" - 3: %s", c);
 						
 			}
 	
-	/*private void checkSetBase(String string) {
-
-		System.out.println("setbase [expression] in rectangle [id] ;");
-		matchSetBase(string);		
-		checkExpresion(lookahead);
-		matchIn(lookahead);
-		matchRectangle(lookahead);
-		matchId(lookahead);
-		matchFin(lookahead);
-		
-	}*/
 
 	private boolean matchSetBase(String string) {
 		if(string == "setear base"){
@@ -586,62 +490,61 @@ private boolean matchSetRadio(String string) {
 			return true;
 		}
 		System.out.printf("Vino %s, se esperaba setBase.", string);
-		System.out.close();
+		System.exit(0);
 		return false;
 		
 	}
 
 	private void checkExpresion(String string) {
-		System.out.println("CHECK EXPRESION");
-		
+		//System.out.println("CHECK EXPRESION");
+	
 		checkTermino(string);
 		checkTerminoR(lookahead);
-
 		
 	
 }
 
 private void checkTerminoR(String string) {
-	System.out.println("CHECK TERMINO R");
-	if (!matchLamda(string)){
-		
-		if(!matchAdicion(string)){
-			checkFactor(string);
-		}
-		else{
-		checkTerminoR(lookahead);}	
-	} else {
-		matchLamda(string);
-	}
 	
-	
-}
-
-private boolean matchLamda(String string) {
-	if(string == "in" || string == "coma" ){
-		System.out.println("Termino expresion.");
+//	System.out.println("CHECK TERMINO R");
+	if(!matchAdicion(string)){
 		
-		return true;
-	} else {
-		if(matchCierroP(string)){
-			return true;
-		}else{
-		System.out.printf("Vino %s, se esperaba termino expresion \n ", string);
-		return false;
+		checkFactor(string);
+	
 		}
-	}
+		else{		
+		
+		checkTermino(lookahead);
+		
+		
+		checkTerminoR(lookahead);
+		
+		}	
+		
+		
 }
 
 private void checkFactor(String string) {
-	System.out.println("CHECK FACTOR");
+	
+	
+	
+	//System.out.println("CHECK FACTOR");
 	if (string == "Numero"){
-		matchNumero(string);}
+		
+		
+
+		matchNumero(string);
+		
+		}
 	else{
 		if(matchAbroP(string)){
+		
+			
+			
 		checkExpresion(lookahead);
-	//	matchCierroP(lookahead);
-		}else{
-			matchCierroP(string);
+		
+		matchCierroP(lookahead);
+		
 		}
 		
 	}
@@ -655,16 +558,29 @@ private boolean matchNumero(String string) {
 		lookahead = token.getClase();
 		return true;
 	} else {
-		System.out.printf("Vino %s, se esperaba un numero valido \n ", string);
-		System.out.close();
+	
 		return false;
 	}
 	
 }
 
 private boolean matchAdicion(String string) {
+	
 	if(string == "Adicion"){
 		System.out.println("Es Adicion.");
+		token = (Token) iterator.next();
+		lookahead = token.getClase();
+		return true;
+		
+	}
+	return false;
+	
+}
+
+private boolean matchProducto(String string) {
+	if(string == "Producto"){
+		
+		System.out.println("Es Producto.");
 		token = (Token) iterator.next();
 		lookahead = token.getClase();
 		return true;
@@ -677,37 +593,55 @@ private boolean matchAdicion(String string) {
 
 
 private void checkTermino(String string) {
-	System.out.println("CHECK TERMINO");
+	//System.out.println("CHECK TERMINO");
 	checkFactor(string);
 	checkFactorR(lookahead);
 	
 }
 
 private void checkFactorR(String string) {
-	System.out.println("CHECK FACTOR R");
+	//System.out.println("CHECK FACTOR R");
 	
-	if (!matchLamda(string)){
-	
+
 		if(matchAbroP(string)){
+		
+		
+		
 		checkExpresion(lookahead);
-//		matchCierroP(lookahead);
-		}
+		matchCierroP(lookahead);
+		
+		
 		
 	}
+		else {
+			
+			if(matchProducto(string))
+			{
+				
+				
+				checkFactor(lookahead);
+				checkFactorR(lookahead);
+			}
+			else {
+				matchNumero(string);
+				
+				
+			}
+			
+
 		
-	
-	
+		}
+		
 }
 
 private boolean matchCierroP(String string) {
 	if(string == "Parentesis C"){
-		System.out.println("Es cierre parentesis");
 		token = (Token) iterator.next();
 		lookahead = token.getClase();
 		return true;
 	}
 	System.out.printf("Vino %s, se esperaba ')'. \n", string);
-	
+	System.exit(0);
 	return false;
 	
 }
@@ -715,12 +649,10 @@ private boolean matchCierroP(String string) {
 
 private boolean matchAbroP(String string) {
 	if(string == "Parentesis A"){
-		System.out.println("Es abro parentesis");
 		token = (Token) iterator.next();
 		lookahead = token.getClase();
 		return true;
 	}
-	System.out.printf("Vino %s, se esperaba '('. \n", string);
 	
 	return false;
 	
@@ -738,7 +670,9 @@ private boolean matchAbroP(String string) {
 			}
 			else {
 				System.out.println("[;] Fin de sentencia");
+				System.out.println("\n");
 				System.out.println("Terminaron las sentencias a analizar");
+				System.out.println("\n");
 				
 			}
 		}
@@ -753,7 +687,7 @@ private boolean matchAbroP(String string) {
 			return true;
 		}
 		System.out.printf("Vino %s, se esperaba setcolor \n", string);
-		System.out.close();
+		System.exit(0);
 		return false;
 		
 	}
@@ -766,7 +700,7 @@ private boolean matchAbroP(String string) {
 		return true;
 	}
 		System.out.printf("Vino %s, se esperaba un color del tipo #AAA111 \n", string);
-		System.out.close();
+		System.exit(0);
 		return false;
 	
 		
@@ -797,15 +731,7 @@ private boolean matchAbroP(String string) {
 		matchFin(lookahead);
 		
 		raiz.addChild(create);
-		String a = raiz.getChild(0).getToken().getLexema();
-	    String b = raiz.getChild(0).getChild(0).getToken().getLexema();
-	    String c = raiz.getChild(0).getChild(1).getToken().getLexema();
-	    
-	    System.out.printf("Muestro arbol de crear: ");
 		
-		System.out.printf("-  1: %s", a);
-		System.out.printf("- 2: %s", b);
-		System.out.printf("- 3: %s", c);
 		
 	}
 		
@@ -821,7 +747,7 @@ private boolean matchAbroP(String string) {
 			return true;
 		} else {
 			System.out.printf("Vino %s, se esperaba un ID valido \n ", string);
-			System.out.close();
+			System.exit(0);
 			return false;
 		}
 		
@@ -843,7 +769,7 @@ private boolean matchAbroP(String string) {
 				
 			} else {
 				System.out.printf("Vino %s, se esperaba una figura \n ", string);
-				System.out.close();
+				System.exit(0);
 				
 			}
 		
@@ -859,7 +785,7 @@ private boolean matchAbroP(String string) {
 			return true;
 		} else {
 		System.out.printf("Vino %s, se esperaba un rectangulo \n ", string);
-			System.out.close();
+		System.exit(0);
 			return false;
 		}
 		
@@ -886,7 +812,7 @@ private boolean matchAbroP(String string) {
 			return true;
 		}
 		System.out.printf("Vino %s, se esperaba 'create' \n ", string);
-		System.out.close();
+		System.exit(0);
 		return false;
 		
 	}

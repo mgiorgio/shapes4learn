@@ -158,7 +158,7 @@ public class LexicalAnalyzer {
 				    	        
 				    //color_def
 
-				    //System.out.println("Entra en Color_def el lexema " + lexemas[i]); 
+				    //System.out.println("Entra en Color_def el lexema " + lexemas[i].charAt(0)); 
 				    
 
 				    if ( lexemas[i].charAt(0)=='#')
