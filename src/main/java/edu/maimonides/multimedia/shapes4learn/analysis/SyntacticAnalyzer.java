@@ -72,37 +72,85 @@ public class SyntacticAnalyzer {
 		return raiz;
 	}
 	
-private void validarArbol(AST raiz2) {
-		// TODO Auto-generated method stub
+	public void validarArbol(AST raiz2){
 
-	
-	System.out.println("--- 햞boles ----- ");
-	System.out.println("\n");
-	
-	for (Iterator<AST> it = raiz2.listChildren().iterator(); it.hasNext();) {
-		AST arbol = it.next();
+
+
+		System.out.println("--- 햞boles ----- "); 
+
+	 	System.out.println("\n"); 
+
+	 	 
+
+	 	for (Iterator<AST> it = raiz2.listChildren().iterator(); it.hasNext();) { 
+
 		
-		String lexema = arbol.getToken().getClase();
-		
-		System.out.println("    " + lexema);
-		
-		String s = new String();
-		
-		for(int a = 0 ; a < arbol.listChildren().size(); a++ ){
-			
-			String tipo = arbol.getChild(a).getToken().getLexema();
+
+	 		AST arbol = it.next(); 
+
+	 	
+
+	 		String lexema = arbol.getToken().getClase(); 
+
+	 		 
+
+	 		System.out.println("    " + lexema);   
+
+	 		 
+
+	 		String s = new String(); 
 
 			
-			s = s + tipo + "   " ;
+
+			if (arbol.listChildren().size() != 0 ){ 
+
 			
-		}
-		System.out.println(s);
-		System.out.println("\n");
-		
+
+	 		 
+
+			for(int a = 0 ; a < arbol.listChildren().size(); a++ ){
+
+			
+
+				if (arbol.getChild(a).listChildren().size() != 0 ){ 
+
+				
+
+				validarArbol(arbol);
+
+				
+
+				} else { 
+
+	 			 
+
+	 			String tipo = arbol.getChild(a).getToken().getLexema(); 
+
+	 			 
+
+				s = s + tipo + "   " ; 
+
+	 			 
+
+	 		
+
+				System.out.println(s); 
+
+				System.out.println("\n"); 
+
+				}
+
+	 		 
+
+			} 
+
+		 }
+
+		System.out.println("---  Fin 햞boles ----- "); 
+
+		System.out.println("\n"); 
+
 	}
-	
-	System.out.println("---  Fin 햞boles ----- ");
-	System.out.println("\n");
 	
 	System.out.println("\n");
 	System.out.println("--- Comienza Analisis semantico ----- ");
