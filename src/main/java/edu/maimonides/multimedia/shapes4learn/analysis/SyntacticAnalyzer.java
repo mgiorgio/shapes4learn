@@ -17,6 +17,8 @@ import edu.maimonides.multimedia.shapes4learn.model.Token;
  * @author Matias Giorgio
  * 
  */
+
+
 public class SyntacticAnalyzer {
 	
 	private int linea=0;
@@ -27,7 +29,7 @@ public class SyntacticAnalyzer {
 	private AST raiz = new AST();
 	private AST expG = new AST();
 	private ArrayList<Figura> figuras; //pasar al semantico
-
+	
 	public SyntacticAnalyzer() {
 	}
 
@@ -462,22 +464,30 @@ private boolean matchSetRadio(String string) {
 		
 		System.out.println("Se espera: setbase [expression] in rectangle [id] ;");		
 				
-				matchSetBase(string);
-				
-				
-				checkExpresion(lookahead);
-				
-			
-				
-				matchIn(lookahead);
-				matchRectangle(lookahead);
+			AST setbase = new AST();
+			setbase.setLinea(linea);
+			setbase.setToken(token);
 		
-				
+			matchSetBase(string);
+
+			setbase.addChild(checkExpresion(lookahead));
 			
+			matchIn(lookahead);
+			
+			matchRectangle(lookahead);
+		
+			
+			AST id = new AST();
+			id.setLinea(linea);
+			id.setToken(token);
+			
+			
+			setbase.addChild(id);
+			
+			matchId(lookahead);
+			matchFin(lookahead);
 				
-				matchId(lookahead);
-				matchFin(lookahead);
-				
+			raiz.addChild(setbase);
 						
 			}
 	
@@ -495,59 +505,114 @@ private boolean matchSetRadio(String string) {
 		
 	}
 
-	private void checkExpresion(String string) {
+	private AST checkExpresion(String string) {
 		//System.out.println("CHECK EXPRESION");
 	
-		checkTermino(string);
-		checkTerminoR(lookahead);
+		AST tnode = checkTermino(string);
+		AST trnode = checkTerminoR(lookahead);
 		
-	
+	return createNodo(tnode,trnode);
 }
 
-private void checkTerminoR(String string) {
+private AST createNodo(AST tnode, AST trnode) {
 	
-//	System.out.println("CHECK TERMINO R");
-	if(!matchAdicion(string)){
+	AST op = new AST();
+	
+	AST nodeI = tnode;
+	
+	//System.out.println(tnode.getToken().getLexema() + " " + trnode.getToken().getLexema());
+	if (trnode != null){
+	if (trnode.getToken().getClase()=="Adicion"){
 		
-		checkFactor(string);
 	
+	op.setToken(trnode.getToken());
+	op.setLinea(trnode.getLinea());
+	
+	
+	System.out.println(tnode.getChild(0).getToken().getLexema());
+	AST nodeD = trnode.getChild(0);
+	
+	op.addChild(nodeI);
+	op.addChild(nodeD);
+	
+	return op;
+	
+	}
+	
+	if (trnode.getToken().getClase()=="Producto"){
+		
+		
+	op.setToken(trnode.getToken());
+	op.setLinea(trnode.getLinea());
+	AST nodeD = trnode.getChild(0);
+	
+	op.addChild(nodeI);
+	op.addChild(nodeD);
+	
+	return op;
+	
+	}
+	}
+		return nodeI;
+	}
+
+private AST checkTerminoR(String string) {
+	
+	AST fnode = new AST();
+	
+	
+	System.out.println("CHECK TERMINO R");
+	if(matchAdicion(string)){
+		
+		AST tnode = checkTermino(lookahead);
+		AST trnode = checkTerminoR(lookahead);
+		
+		return createNodo(tnode, trnode);
+	}
+	else{
+		
+		if (string=="Numero" || string == "Parentesis A") {
+			fnode = checkFactor(string);
+			return fnode;			
+		}else {
+			return null;
 		}
-		else{		
-		
-		checkTermino(lookahead);
 		
 		
-		checkTerminoR(lookahead);
-		
-		}	
+			
+	}	
+	
+	
 		
 		
 }
 
-private void checkFactor(String string) {
-	
-	
-	
-	//System.out.println("CHECK FACTOR");
+private AST checkFactor(String string) {
+
+	AST fnode = new AST();
+	System.out.println("CHECK FACTOR");
 	if (string == "Numero"){
 		
 		
-
+		fnode.setLinea(linea);
+		fnode.setToken(token);
+		
 		matchNumero(string);
 		
 		}
 	else{
 		if(matchAbroP(string)){
-		
-			
-			
-		checkExpresion(lookahead);
+	
+		fnode = checkExpresion(lookahead);
 		
 		matchCierroP(lookahead);
 		
 		}
 		
+		
+		
 	}
+	return fnode;
 	
 }
 
@@ -558,7 +623,7 @@ private boolean matchNumero(String string) {
 		lookahead = token.getClase();
 		return true;
 	} else {
-	
+		
 		return false;
 	}
 	
@@ -582,7 +647,7 @@ private boolean matchProducto(String string) {
 		
 		System.out.println("Es Producto.");
 		token = (Token) iterator.next();
-		lookahead = token.getClase();
+		lookahead = token.getClase(); 
 		return true;
 	} else {
 		return false;
@@ -590,24 +655,32 @@ private boolean matchProducto(String string) {
 	
 }
 
+//EXP 
+//TERM = 4*4
+//TERMR+4
 
 
-private void checkTermino(String string) {
-	//System.out.println("CHECK TERMINO");
-	checkFactor(string);
-	checkFactorR(lookahead);
+private AST checkTermino(String string) {
+	System.out.println("CHECK TERMINO");
+	AST fnode = checkFactor(string); //4
+	AST frnode = checkFactorR(lookahead); //*4
+	
+	
+	return createNodo(fnode, frnode);
 	
 }
 
-private void checkFactorR(String string) {
-	//System.out.println("CHECK FACTOR R");
+private AST checkFactorR(String string) {
+	System.out.println("CHECK FACTOR R");
+	AST frnode = new AST();
+	frnode = null;
 	
 
 		if(matchAbroP(string)){
 		
 		
 		
-		checkExpresion(lookahead);
+		frnode = checkExpresion(lookahead);
 		matchCierroP(lookahead);
 		
 		
@@ -619,18 +692,23 @@ private void checkFactorR(String string) {
 			{
 				
 				
-				checkFactor(lookahead);
-				checkFactorR(lookahead);
+				AST fnode = checkFactor(lookahead);
+				frnode = checkFactorR(lookahead);
+				return createNodo(fnode, frnode);
 			}
 			else {
-				matchNumero(string);
-				
+				if(matchNumero(string)){
+				frnode.setLinea(linea);
+				frnode.setToken(token);
+				}
 				
 			}
 			
 
 		
 		}
+		
+		return frnode;
 		
 }
 
