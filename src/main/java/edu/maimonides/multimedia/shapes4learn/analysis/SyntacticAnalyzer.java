@@ -76,17 +76,20 @@ public class SyntacticAnalyzer {
 
 
 
-		System.out.println("--- ¡rboles ----- "); 
+		System.out.println("--- √Årboles ----- "); 
 
 	 	System.out.println("\n"); 
 
+// SETBASE
+// +    RECTANGLE
+//4  4
 	 	 
 
-	 	for (Iterator<AST> it = raiz2.listChildren().iterator(); it.hasNext();) { 
+	 	for (Iterator<AST> it = raiz2.listChildren().iterator(); it.hasNext();) { //SETBASE.LIST = 2 - +List = 2 - 4
 
 		
 
-	 		AST arbol = it.next(); 
+	 		AST arbol = it.next(); //SETBASE - "+" - 4
 
 	 	
 
@@ -94,7 +97,8 @@ public class SyntacticAnalyzer {
 
 	 		 
 
-	 		System.out.println("    " + lexema);   
+	 		System.out.println("    " + lexema);   // PRINT: SETBASE - Adicion - Numero
+	 		System.out.println("Hijos: " + raiz2.listChildren().size());// Print: 2 - 2 - 0
 
 	 		 
 
@@ -102,7 +106,7 @@ public class SyntacticAnalyzer {
 
 			
 
-			if (arbol.listChildren().size() != 0 ){ 
+			if (arbol.listChildren().size() != 0 ){ // SI =  2 - SI = 2 - NO
 
 			
 
@@ -112,7 +116,7 @@ public class SyntacticAnalyzer {
 
 			
 
-				if (arbol.getChild(a).listChildren().size() != 0 ){ 
+				if (arbol.getChild(a).listChildren().size() != 0 ){ //SI = 2 - SI = 2
 
 				
 
@@ -120,7 +124,9 @@ public class SyntacticAnalyzer {
 
 				
 
-				} else { 
+				} 
+				
+			} else { 
 
 	 			 
 
@@ -142,11 +148,11 @@ public class SyntacticAnalyzer {
 
 	 		 
 
-			} 
+			
 
 		 }
 
-		System.out.println("---  Fin ¡rboles ----- "); 
+		System.out.println("---  Fin √Årboles ----- "); 
 
 		System.out.println("\n"); 
 
