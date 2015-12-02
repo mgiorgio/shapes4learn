@@ -76,11 +76,8 @@ public class SyntacticAnalyzer {
 
 
 
-<<<<<<< HEAD
-		System.out.println("--- Arboles ----- "); 
-=======
-		System.out.println("--- Árboles ----- "); 
->>>>>>> origin/master
+	System.out.println("--- Arboles ----- "); 
+
 
 	 	System.out.println("\n"); 
 
@@ -89,11 +86,11 @@ public class SyntacticAnalyzer {
 //4  4
 	 	 
 
-	 	for (Iterator<AST> it = raiz2.listChildren().iterator(); it.hasNext();) { //SETBASE.LIST = 2 - +List = 2 - 4
+	 	for (Iterator<AST> it = raiz2.listChildren().iterator(); it.hasNext();) { 
 
 		
 
-	 		AST arbol = it.next(); //SETBASE - "+" - 4
+	 		AST arbol = it.next(); 
 
 	 	
 
@@ -130,24 +127,21 @@ public class SyntacticAnalyzer {
 				{
 				
 					if (arbol.getChild(a).listChildren().size() != 0 ){
+						System.out.println("Valido arbol de raiz: " + a),
 						validarArbol(arbol);
 					} 
-					else{
-						String tipo = arbol.getChild(a).getToken().getLexema(); 
-						System.out.println(tipo + "  "); 
-						System.out.println("\n"); 
-					}
+				//	else{
+				//		String tipo = arbol.getChild(a).getToken().getLexema(); 
+				//		System.out.println(tipo + "  "); 
+				//		System.out.println("\n"); 
+				//	}
 				
 				} 
 			
 		 	}
 	 	}
 
-<<<<<<< HEAD
-		System.out.println("---  Fin Arboles ----- "); 
-=======
 		System.out.println("---  Fin Árboles ----- "); 
->>>>>>> origin/master
 
 		System.out.println("\n"); 
 
