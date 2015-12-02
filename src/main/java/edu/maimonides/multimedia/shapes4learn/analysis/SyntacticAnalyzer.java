@@ -76,7 +76,11 @@ public class SyntacticAnalyzer {
 
 
 
+<<<<<<< HEAD
 		System.out.println("--- Arboles ----- "); 
+=======
+		System.out.println("--- Árboles ----- "); 
+>>>>>>> origin/master
 
 	 	System.out.println("\n"); 
 
@@ -139,7 +143,11 @@ public class SyntacticAnalyzer {
 		 	}
 	 	}
 
+<<<<<<< HEAD
 		System.out.println("---  Fin Arboles ----- "); 
+=======
+		System.out.println("---  Fin Árboles ----- "); 
+>>>>>>> origin/master
 
 		System.out.println("\n"); 
 
