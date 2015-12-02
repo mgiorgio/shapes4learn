@@ -97,8 +97,8 @@ public class SyntacticAnalyzer {
 
 	 		 
 
-	 		System.out.println("    " + lexema);   // PRINT: SETBASE - Adicion - Numero
-	 		System.out.println("Hijos: " + raiz2.listChildren().size());// Print: 2 - 2 - 0
+	 		System.out.println("    " + lexema);   
+	 		System.out.println("Hijos: " + arbol.listChildren().size());
 
 	 		 
 
@@ -106,51 +106,38 @@ public class SyntacticAnalyzer {
 
 			
 
-			if (arbol.listChildren().size() != 0 ){ // SI =  2 - SI = 2 - NO
-
-			
-
-	 		 
-
-			for(int a = 0 ; a < arbol.listChildren().size(); a++ ){
-
-			
-
-				if (arbol.getChild(a).listChildren().size() != 0 ){ //SI = 2 - SI = 2
-
+			if (arbol.listChildren().size() != 0 ){
+				for(int a = 0 ; a < arbol.listChildren().size(); a++ )
+				{
 				
-
-				validarArbol(arbol);
-
 				
+					String tipo = arbol.getChild(a).getToken().getLexema(); 
 
-				} 
+					s = s + tipo + "   " ; 
+
+				}
 				
-			} else { 
-
-	 			 
-
-	 			String tipo = arbol.getChild(a).getToken().getLexema(); 
-
-	 			 
-
-				s = s + tipo + "   " ; 
-
-	 			 
-
-	 		
-
 				System.out.println(s); 
 
 				System.out.println("\n"); 
-
-				}
-
-	 		 
-
 			
-
-		 }
+			
+				for(int a = 0 ; a < arbol.listChildren().size(); a++ )
+				{
+				
+					if (arbol.getChild(a).listChildren().size() != 0 ){
+						validarArbol(arbol);
+					} 
+					else{
+						String tipo = arbol.getChild(a).getToken().getLexema(); 
+						System.out.println(tipo + "  "); 
+						System.out.println("\n"); 
+					}
+				
+				} 
+			
+		 	}
+	 	}
 
 		System.out.println("---  Fin Árboles ----- "); 
 
