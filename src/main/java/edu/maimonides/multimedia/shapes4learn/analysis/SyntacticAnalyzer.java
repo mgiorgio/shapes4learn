@@ -76,17 +76,20 @@ public class SyntacticAnalyzer {
 
 
 
-		System.out.println("--- Árboles ----- "); 
+		System.out.println("--- Arboles ----- "); 
 
 	 	System.out.println("\n"); 
 
+// SETBASE
+// +    RECTANGLE
+//4  4
 	 	 
 
-	 	for (Iterator<AST> it = raiz2.listChildren().iterator(); it.hasNext();) { 
+	 	for (Iterator<AST> it = raiz2.listChildren().iterator(); it.hasNext();) { //SETBASE.LIST = 2 - +List = 2 - 4
 
 		
 
-	 		AST arbol = it.next(); 
+	 		AST arbol = it.next(); //SETBASE - "+" - 4
 
 	 	
 
@@ -95,6 +98,7 @@ public class SyntacticAnalyzer {
 	 		 
 
 	 		System.out.println("    " + lexema);   
+	 		System.out.println("Hijos: " + arbol.listChildren().size());
 
 	 		 
 
@@ -102,59 +106,48 @@ public class SyntacticAnalyzer {
 
 			
 
-			if (arbol.listChildren().size() != 0 ){ 
-
-			
-
-	 		 
-
-			for(int a = 0 ; a < arbol.listChildren().size(); a++ ){
-
-			
-
-				if (arbol.getChild(a).listChildren().size() != 0 ){ 
-
+			if (arbol.listChildren().size() != 0 ){
+				for(int a = 0 ; a < arbol.listChildren().size(); a++ )
+				{
 				
-
-				validarArbol(arbol);
-
 				
+					String tipo = arbol.getChild(a).getToken().getLexema(); 
 
-				} else { 
+					s = s + tipo + "   " ; 
 
-	 			 
-
-	 			String tipo = arbol.getChild(a).getToken().getLexema(); 
-
-	 			 
-
-				s = s + tipo + "   " ; 
-
-	 			 
-
-	 		
-
+				}
+				
 				System.out.println(s); 
 
 				System.out.println("\n"); 
+			
+			
+				for(int a = 0 ; a < arbol.listChildren().size(); a++ )
+				{
+				
+					if (arbol.getChild(a).listChildren().size() != 0 ){
+						validarArbol(arbol);
+					} 
+					else{
+						String tipo = arbol.getChild(a).getToken().getLexema(); 
+						System.out.println(tipo + "  "); 
+						System.out.println("\n"); 
+					}
+				
+				} 
+			
+		 	}
+	 	}
 
-				}
-
-	 		 
-
-			} 
-
-		 }
-
-		System.out.println("---  Fin Árboles ----- "); 
+		System.out.println("---  Fin Arboles ----- "); 
 
 		System.out.println("\n"); 
 
-	}
 	
-	System.out.println("\n");
-	System.out.println("--- Comienza Analisis semantico ----- ");
-	System.out.println("\n");
+	
+	System.out.println ("\n");
+	System.out.println ("--- Comienza Analisis semantico ----- ");
+	System.out.println ("\n");
 	
 	for (Iterator<AST> it = raiz2.listChildren().iterator(); it.hasNext();) {
 		
@@ -206,16 +199,16 @@ public class SyntacticAnalyzer {
 		
 	}
 	
-	for (Iterator<Figura> iterator = figuras.iterator(); iterator.hasNext();) {
-		Figura fig = iterator.next();
+	for (Iterator<Figura> iterator1 = figuras.iterator(); iterator.hasNext();) {
+		Figura fig = iterator1.next();
 		System.out.println("\n");
 		
 		System.out.printf(" Figura creada: %s Clase %s", fig.getId() , fig.getClase());
 		
 	}
 	
-	
 	}
+	
 
 public void checkSent(List<Token> tokens){
 	
