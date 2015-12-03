@@ -99,16 +99,13 @@ public class SyntacticAnalyzer {
 	 		 
 
 	 		System.out.println("    " + lexema);   
-	 		System.out.println("Hijos: " + arbol.listChildren().size());
-
-	 		 
-
-	 		String s = new String(); 
-
+	 		
+	 		String s = "    ";
 			
-
 			if (arbol.listChildren().size() != 0 ){
+				
 				for(int a = 0 ; a < arbol.listChildren().size(); a++ )
+				
 				{
 				
 				
@@ -120,38 +117,25 @@ public class SyntacticAnalyzer {
 				
 				System.out.println(s); 
 
-				System.out.println("\n"); 
-			
-			
 				for(int a = 0 ; a < arbol.listChildren().size(); a++ )
+					
 				{
-				
-					if (arbol.getChild(a).listChildren().size() != 0 ){
-						System.out.println("Valido arbol de raiz: " + a),
-						validarArbol(arbol);
-					} 
-				//	else{
-				//		String tipo = arbol.getChild(a).getToken().getLexema(); 
-				//		System.out.println(tipo + "  "); 
-				//		System.out.println("\n"); 
-				//	}
-				
-				} 
-			
-		 	}
-	 	}
+	 			validohijo(arbol.getChild(a));
+				}
+			}
 
-		System.out.println("---  Fin Árboles ----- "); 
+		System.out.println("---  Fin Ã�rboles ----- "); 
 
 		System.out.println("\n"); 
-
+	 	}
+	}
 	
 	
-	System.out.println ("\n");
-	System.out.println ("--- Comienza Analisis semantico ----- ");
-	System.out.println ("\n");
+	//System.out.println ("\n");
+	//System.out.println ("--- Comienza Analisis semantico ----- ");
+	//System.out.println ("\n");
 	
-	for (Iterator<AST> it = raiz2.listChildren().iterator(); it.hasNext();) {
+	/**for (Iterator<AST> it = raiz2.listChildren().iterator(); it.hasNext();) {
 		
 	AST arbol = it.next();
 		
@@ -199,18 +183,63 @@ public class SyntacticAnalyzer {
 		
 		
 		
-	}
+	}**/
 	
-	for (Iterator<Figura> iterator1 = figuras.iterator(); iterator.hasNext();) {
+/**	for (Iterator<Figura> iterator1 = figuras.iterator(); iterator.hasNext();) {
 		Figura fig = iterator1.next();
 		System.out.println("\n");
 		
 		System.out.printf(" Figura creada: %s Clase %s", fig.getId() , fig.getClase());
 		
-	}
+	}**/
 	
-	}
 	
+	
+
+	private void validohijo(AST arbol) {
+		
+	
+		
+		
+
+			//System.out.println("\n"); 
+			String s = new String();
+		
+			for(int a = 0 ; a < arbol.listChildren().size(); a++ )
+			
+			{
+			
+				System.out.println("Valido " + arbol.getToken().getLexema() + " " + arbol.getChild(a).listChildren().size());
+				
+				if (arbol.getChild(a).listChildren().size() != 0 ){
+					//System.out.println("Valido arbol de raiz: " + a);
+					String tipo = arbol.getChild(a).getToken().getLexema(); 
+
+					s = s + tipo + "   " ; 
+					
+					System.out.println("Valido" + arbol.getChild(a).getToken().getLexema());
+					
+					validohijo(arbol.getChild(a));
+				} 
+				else{
+					String tipo = arbol.getChild(a).getToken().getLexema(); 
+
+					s = s + tipo + "   " ; 
+
+			
+				}
+			
+			} 
+			
+			if (s != null){
+				System.out.println(s);
+			}
+			
+		
+	 	
+
+		
+	}
 
 public void checkSent(List<Token> tokens){
 	
@@ -565,36 +594,38 @@ private AST createNodo(AST tnode, AST trnode) {
 	
 	//System.out.println(tnode.getToken().getLexema() + " " + trnode.getToken().getLexema());
 	if (trnode != null){
-	if (trnode.getToken().getClase()=="Adicion"){
+		
+		System.out.println("Es distinto de null: " +  trnode.getToken().getClase());
+		
+		if (trnode.getToken().getClase()=="Adicion"){
 		
 	
-	op.setToken(trnode.getToken());
-	op.setLinea(trnode.getLinea());
+			op.setToken(trnode.getToken());
+			op.setLinea(trnode.getLinea());
 	
 	
-	System.out.println(tnode.getChild(0).getToken().getLexema());
-	AST nodeD = trnode.getChild(0);
+			AST nodeD = trnode;
 	
-	op.addChild(nodeI);
-	op.addChild(nodeD);
+			op.addChild(nodeI);
+			op.addChild(nodeD);
 	
-	return op;
+			return op;
 	
-	}
+		}
 	
-	if (trnode.getToken().getClase()=="Producto"){
+		if (trnode.getToken().getClase()=="Producto"){
 		
 		
-	op.setToken(trnode.getToken());
-	op.setLinea(trnode.getLinea());
-	AST nodeD = trnode.getChild(0);
-	
-	op.addChild(nodeI);
-	op.addChild(nodeD);
-	
-	return op;
-	
-	}
+			op.setToken(trnode.getToken());
+			op.setLinea(trnode.getLinea());
+			AST nodeD = trnode.getChild(0);
+			
+			op.addChild(nodeI);
+			op.addChild(nodeD);
+			
+			return op;
+			
+		}
 	}
 		return nodeI;
 	}
@@ -602,19 +633,28 @@ private AST createNodo(AST tnode, AST trnode) {
 private AST checkTerminoR(String string) {
 	
 	AST fnode = new AST();
-	
+	fnode.setLinea(linea);
+	fnode.setToken(token);
 	
 	System.out.println("CHECK TERMINO R");
 	if(matchAdicion(string)){
 		
+		
 		AST tnode = checkTermino(lookahead);
 		AST trnode = checkTerminoR(lookahead);
 		
-		return createNodo(tnode, trnode);
+		AST opnode = new AST();
+		opnode = createNodo(tnode, trnode);
+		
+		fnode.addChild(opnode);
+		
+		return fnode;
+		
 	}
 	else{
 		
 		if (string=="Numero" || string == "Parentesis A") {
+			
 			fnode = checkFactor(string);
 			return fnode;			
 		}else {
