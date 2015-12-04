@@ -29,6 +29,7 @@ public class SyntacticAnalyzer {
 	private AST raiz = new AST();
 	private AST expG = new AST();
 	private ArrayList<Figura> figuras; //pasar al semantico
+	private String s1 = "    ";
 	
 	public SyntacticAnalyzer() {
 	}
@@ -98,9 +99,9 @@ public class SyntacticAnalyzer {
 
 	 		 
 
-	 		System.out.println("    " + lexema);   
+	 		System.out.println("      " + lexema);   
 	 		
-	 		String s = "    ";
+	 		String s = "     ";
 			
 			if (arbol.listChildren().size() != 0 ){
 				
@@ -115,7 +116,7 @@ public class SyntacticAnalyzer {
 
 				}
 				
-				System.out.println(s); 
+				System.out.println(s1 + s); 
 
 				for(int a = 0 ; a < arbol.listChildren().size(); a++ )
 					
@@ -124,7 +125,7 @@ public class SyntacticAnalyzer {
 				}
 			}
 
-		System.out.println("---  Fin Ã�rboles ----- "); 
+		System.out.println("---  Fin arboles ----- "); 
 
 		System.out.println("\n"); 
 	 	}
@@ -203,38 +204,46 @@ public class SyntacticAnalyzer {
 		
 
 			//System.out.println("\n"); 
-			String s = new String();
+			 s1 = s1 + "  ";
+			 String s = " ";
 		
 			for(int a = 0 ; a < arbol.listChildren().size(); a++ )
 			
 			{
 			
-				System.out.println("Valido " + arbol.getToken().getLexema() + " " + arbol.getChild(a).listChildren().size());
+				//System.out.println("Valido " + arbol.getToken().getLexema() + "Hijos: " + arbol.listChildren().size());
 				
 				if (arbol.getChild(a).listChildren().size() != 0 ){
 					//System.out.println("Valido arbol de raiz: " + a);
 					String tipo = arbol.getChild(a).getToken().getLexema(); 
 
-					s = s + tipo + "   " ; 
+					s = s + tipo + " " ; 
 					
-					System.out.println("Valido" + arbol.getChild(a).getToken().getLexema());
-					
-					validohijo(arbol.getChild(a));
+					//System.out.println("Valido si es distinto de cero: " + arbol.getChild(a).getToken().getLexema());
+				
 				} 
+				
+			
 				else{
 					String tipo = arbol.getChild(a).getToken().getLexema(); 
 
-					s = s + tipo + "   " ; 
+					//System.out.println("Valido si es cero: " + arbol.getChild(a).getToken().getLexema());
+					
+					s = s + tipo + "  "; 
 
 			
 				}
 			
 			} 
 			
-			if (s != null){
-				System.out.println(s);
-			}
 			
+				System.out.println(s1 + s);
+			
+				for(int a = 0 ; a < arbol.listChildren().size(); a++ )
+					
+				{
+	 			validohijo(arbol.getChild(a));
+				}
 		
 	 	
 
@@ -580,8 +589,8 @@ private boolean matchSetRadio(String string) {
 	private AST checkExpresion(String string) {
 		//System.out.println("CHECK EXPRESION");
 	
-		AST tnode = checkTermino(string);
-		AST trnode = checkTerminoR(lookahead);
+		AST tnode = checkTermino(string); // 4
+		AST trnode = checkTerminoR(lookahead); // + 4
 		
 	return createNodo(tnode,trnode);
 }
@@ -607,6 +616,9 @@ private AST createNodo(AST tnode, AST trnode) {
 			AST nodeD = trnode;
 	
 			op.addChild(nodeI);
+			
+			nodeD = trnode.getChild(0);
+			
 			op.addChild(nodeD);
 	
 			return op;
@@ -641,9 +653,11 @@ private AST checkTerminoR(String string) {
 		
 		
 		AST tnode = checkTermino(lookahead);
+		
 		AST trnode = checkTerminoR(lookahead);
 		
 		AST opnode = new AST();
+		
 		opnode = createNodo(tnode, trnode);
 		
 		fnode.addChild(opnode);
@@ -756,7 +770,7 @@ private AST checkTermino(String string) {
 private AST checkFactorR(String string) {
 	System.out.println("CHECK FACTOR R");
 	AST frnode = new AST();
-	frnode = null;
+	
 	
 
 		if(matchAbroP(string)){
@@ -766,7 +780,7 @@ private AST checkFactorR(String string) {
 		frnode = checkExpresion(lookahead);
 		matchCierroP(lookahead);
 		
-		
+		return frnode;
 		
 	}
 		else {
@@ -780,9 +794,10 @@ private AST checkFactorR(String string) {
 				return createNodo(fnode, frnode);
 			}
 			else {
-				if(matchNumero(string)){
 				frnode.setLinea(linea);
 				frnode.setToken(token);
+				if(matchNumero(string)){
+					return frnode;
 				}
 				
 			}
@@ -790,6 +805,8 @@ private AST checkFactorR(String string) {
 
 		
 		}
+		
+		frnode = null;
 		
 		return frnode;
 		
