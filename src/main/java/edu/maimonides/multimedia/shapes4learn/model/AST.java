@@ -12,6 +12,25 @@ import java.util.List;
  * 
  */
 public class AST {
+	
+	public Token token;
+	public int linea; 
+	
+	public Token getToken() {
+		return token;
+	}
+
+	public void setToken(Token token) {
+		this.token = token;
+	}
+
+	public int getLinea() {
+		return linea;
+	}
+
+	public void setLinea(int linea) {
+		this.linea = linea;
+	}
 
 	/**
 	 * The {@link AST} children.

@@ -21,7 +21,7 @@ import edu.maimonides.multimedia.shapes4learn.utils.ShapeUtils;
  * @author Matias Giorgio.
  * 
  */
-/*public class RegexInterpreter implements Interpreter {
+public class RegexInterpreter implements Interpreter {
 
 	private static final String NUMBER_PATTERN = "\\d+";
 	private static final String SHAPE_TYPE_PATTERN = "[a-zA-Z]+";
@@ -136,4 +136,4 @@ import edu.maimonides.multimedia.shapes4learn.utils.ShapeUtils;
 		this.interpret(IOUtils.toString(stream), ambient);
 	}
 
-}*/
+}
