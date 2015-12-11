@@ -630,9 +630,15 @@ private AST createNodo(AST tnode, AST trnode) {
 		
 			op.setToken(trnode.getToken());
 			op.setLinea(trnode.getLinea());
-			AST nodeD = trnode.getChild(0);
+			
+//			AST nodeD = trnode.getChild(0);
+			
+			AST nodeD = trnode;
 			
 			op.addChild(nodeI);
+			
+			nodeD = trnode.getChild(0);
+			
 			op.addChild(nodeD);
 			
 			return op;
@@ -768,48 +774,36 @@ private AST checkTermino(String string) {
 }
 
 private AST checkFactorR(String string) {
+
 	System.out.println("CHECK FACTOR R");
+	
 	AST frnode = new AST();
 	
-	
+	frnode.setLinea(linea);
+	frnode.setToken(token);
 
-		if(matchAbroP(string)){
+	if(matchProducto(string))
+	{
+		AST fnode = checkFactor(lookahead);
 		
+		AST fnode2 = checkFactorR(lookahead);
+		AST opnode = new AST();
 		
-		
-		frnode = checkExpresion(lookahead);
-		matchCierroP(lookahead);
+		opnode = createNodo(fnode, fnode2);
+		frnode.addChild(opnode);
 		
 		return frnode;
 		
-	}
-		else {
+	}else {
+		if(string=="Numero" || string == "Parentesis A"){
 			
-			if(matchProducto(string))
-			{
-				
-				
-				AST fnode = checkFactor(lookahead);
-				frnode = checkFactorR(lookahead);
-				return createNodo(fnode, frnode);
-			}
-			else {
-				frnode.setLinea(linea);
-				frnode.setToken(token);
-				if(matchNumero(string)){
-					return frnode;
-				}
-				
-			}
+			frnode = checkExpresion(string);
+			return frnode;
 			
-
-		
+		}else{
+			return null;
 		}
-		
-		frnode = null;
-		
-		return frnode;
-		
+			}
 }
 
 private boolean matchCierroP(String string) {
